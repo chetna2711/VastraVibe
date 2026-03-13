@@ -1,0 +1,310 @@
+{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+{{ 'video-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .image-plus-video-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.block_spacing }}px;
+  }
+
+  .image-plus-video__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .image-plus-video__item {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Desktop flex row */
+  @media screen and (min-width: 750px) {
+    .image-plus-video__grid {
+      flex-direction: row;
+      align-items: stretch;
+    }
+    .image-plus-video__grid--reverse {
+      flex-direction: row-reverse;
+    }
+    .image-plus-video__item {
+      width: 50%;
+      display: flex;
+    }
+  }
+
+  /* Height handling */
+  .image-plus-video__media {
+    position: relative;
+    width: 100%;
+    height: 100%; 
+  }
+
+  @media screen and (min-width: 750px) {
+    .image-plus-video__media {
+      min-height: 400px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .image-plus-video__media {
+      height: 0;
+      /* Default aspect ratio on mobile if no adapt */
+      padding-bottom: 100%;
+    }
+  }
+
+  .image-plus-video__media img,
+  .image-plus-video__media video,
+  .image-plus-video__media iframe,
+  .image-plus-video__media deferred-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    border: none;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient isolate">
+  <div class="section-{{ section.id }}-padding{% if section.settings.full_width == false %} page-width{% endif %}">
+    {%- unless section.settings.heading == blank -%}
+      <div class="title-wrapper title-wrapper--no-top-margin{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if section.settings.full_width %}style="padding: 0 5rem;"{% endif %}>
+        <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endunless -%}
+
+    <div class="image-plus-video-blocks">
+      {%- for block in section.blocks -%}
+        <div class="image-plus-video__grid{% if block.settings.layout == 'video_first' %} image-plus-video__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+          
+          <!-- Image Item -->
+          <div class="image-plus-video__item">
+            <div class="image-plus-video__media global-media-settings"
+              {% if block.settings.image != blank %}
+                style="--ratio-percent: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%; padding-bottom: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;"
+              {% else %}
+                style="padding-bottom: 100%;"
+              {% endif %}
+            >
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 1500 | image_tag: widths: '165, 360, 535, 750, 1070, 1500', class: 'image-plus-video__img' }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          </div>
+
+          <!-- Video Item -->
+          <div class="image-plus-video__item">
+            {%- liquid
+               assign video_id = block.settings.video.id | default: block.settings.video_url.id
+               assign poster = block.settings.cover_image | default: block.settings.video.preview_image
+               assign alt = 'Video'
+            -%}
+            <div class="image-plus-video__media global-media-settings"
+              {% if poster != blank %}
+                style="--ratio-percent: {{ 1 | divided_by: poster.aspect_ratio | times: 100 }}%; padding-bottom: {{ 1 | divided_by: poster.aspect_ratio | times: 100 }}%;"
+              {% elsif block.settings.image != blank %}
+                style="padding-bottom: {{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;"
+              {% else %}
+                style="padding-bottom: 100%;"
+              {% endif %}
+            >
+              {%- if block.settings.external_video_url != blank -%}
+                <video src="{{ block.settings.external_video_url }}" playsinline autoplay loop muted controls poster="{% if block.settings.cover_image != blank %}{{ block.settings.cover_image | image_url: width: 1500 }}{% endif %}"></video>
+              {%- else -%}
+                <deferred-media class="video-section__media deferred-media" data-media-id="{{ video_id | default: block.id }}">
+                  <button
+                    id="Deferred-Poster-Modal-{{ video_id | default: block.id }}"
+                    class="video-section__poster media deferred-media__poster media--landscape"
+                    type="button"
+                    aria-label="{{ alt }}"
+                  >
+                    {%- if poster != null -%}
+                      {{ poster | image_url: width: 2000 | image_tag: widths: '375, 750, 1100, 1500, 1780, 2000', alt: alt }}
+                    {%- else -%}
+                      {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+                    {%- endif -%}
+                    <span class="deferred-media__poster-button motion-reduce">
+                      <span class="svg-wrapper">
+                        {{- 'icon-play.svg' | inline_asset_content -}}
+                      </span>
+                    </span>
+                  </button>
+                  <template>
+                    {%- if block.settings.video == null and block.settings.video_url != null -%}
+                      {%- if block.settings.video_url.type == 'youtube' -%}
+                        <iframe src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist={{ video_id }}" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      {%- else -%}
+                        <iframe src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1&muted=1&loop=1" class="js-vimeo" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      {%- endif -%}
+                    {%- elsif block.settings.video != null -%}
+                      {{ block.settings.video | video_tag: image_size: '1100x', autoplay: true, loop: true, controls: true, muted: false }}
+                    {%- endif -%}
+                  </template>
+                </deferred-media>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image + Video",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Image + Video",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" },
+        { "value": "hxl", "label": "Extra Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Make section full width"
+    },
+    {
+      "type": "range",
+      "id": "block_spacing",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Spacing between blocks",
+      "default": 36
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_video_pair",
+      "name": "Image + Video",
+      "settings": [
+        {
+          "type": "select",
+          "id": "layout",
+          "options": [
+            { "value": "image_first", "label": "Image on left" },
+            { "value": "video_first", "label": "Image on right" }
+          ],
+          "default": "image_first",
+          "label": "Desktop media position"
+        },
+        {
+          "type": "header",
+          "content": "Image settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Video settings"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify-hosted video",
+          "info": "Overrides the video URL"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "accept": ["youtube", "vimeo"],
+          "label": "URL (YouTube/Vimeo)"
+        },
+        {
+          "type": "text",
+          "id": "external_video_url",
+          "label": "External video URL",
+          "info": "Provide an external .mp4 link. Overrides YouTube/Vimeo/Shopify links."
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Cover image",
+          "info": "Used for external video and YouTube/Vimeo. Shopify videos use their preview image."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image + Video",
+      "blocks": [
+        {
+          "type": "image_video_pair"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
