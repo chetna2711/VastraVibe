@@ -9,45 +9,6 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "featured_collection_slider_8dx9RL": {
       "type": "featured-collection-slider",
       "name": "Featured Collection Slider",
@@ -80,6 +41,7 @@
             "layout": "image_first",
             "image": "shopify://shop_images/01141-m-01_1.webp",
             "video": "shopify://files/videos/c05011211dfb4bf8a2ae97dd08ec9bd5.HD-1080p-2.5Mbps-66151346.mp4",
+            "video_url": "",
             "external_video_url": "",
             "cover_image": "shopify://shop_images/45_2_f0e444bc-f235-4916-a991-6d59f480382e.webp"
           }
@@ -141,7 +103,6 @@
     }
   },
   "order": [
-    "image_banner",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
     "collage_AM7HwV"
