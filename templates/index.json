@@ -80,7 +80,8 @@
             "layout": "image_first",
             "image": "shopify://shop_images/01141-m-01_1.webp",
             "video": "shopify://files/videos/c05011211dfb4bf8a2ae97dd08ec9bd5.HD-1080p-2.5Mbps-66151346.mp4",
-            "external_video_url": ""
+            "external_video_url": "",
+            "cover_image": "shopify://shop_images/45_2_f0e444bc-f235-4916-a991-6d59f480382e.webp"
           }
         }
       },
