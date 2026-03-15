@@ -9,6 +9,62 @@
  */
 {
   "sections": {
+    "custom_collection_list_ttr73H": {
+      "type": "custom-collection-list",
+      "blocks": {
+        "collection_yY3DXd": {
+          "type": "collection",
+          "settings": {
+            "collection": "kurti",
+            "title": ""
+          }
+        },
+        "collection_DdxQbm": {
+          "type": "collection",
+          "settings": {
+            "collection": "gowns",
+            "title": ""
+          }
+        },
+        "collection_dAJ7nJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "lehenga",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_yY3DXd",
+        "collection_DdxQbm",
+        "collection_dAJ7nJ"
+      ],
+      "name": "Custom Collection List",
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "layout_desktop": "grid",
+        "layout_mobile": "slider",
+        "blocks_alignment": "center",
+        "title_position": "overlay",
+        "title_alignment": "center",
+        "image_aspect_ratio": "circle",
+        "circle_size_desktop": 100,
+        "circle_size_mobile": 100,
+        "grid_cols_desktop": 4,
+        "grid_cols_mobile": 2,
+        "grid_gap_desktop": 20,
+        "grid_gap_mobile": 15,
+        "slider_slides_desktop": 6,
+        "slider_slides_tablet": 4,
+        "slider_gap": 15,
+        "slider_slides_mobile": "2.5"
+      }
+    },
     "featured_collection_slider_8dx9RL": {
       "type": "featured-collection-slider",
       "name": "Featured Collection Slider",
@@ -40,6 +96,7 @@
           "settings": {
             "layout": "image_first",
             "image": "shopify://shop_images/01141-m-01_1.webp",
+            "video_autoplay": true,
             "video": "shopify://files/videos/c05011211dfb4bf8a2ae97dd08ec9bd5.HD-1080p-2.5Mbps-66151346.mp4",
             "video_url": "",
             "external_video_url": "",
@@ -103,6 +160,7 @@
     }
   },
   "order": [
+    "custom_collection_list_ttr73H",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
     "collage_AM7HwV"
