@@ -105,20 +105,20 @@
         "image_Abng7b": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/3_287cac0f-d366-40f7-a558-298e84990d5e.jpg"
+            "image": "shopify://shop_images/45_37917524-6351-4775-9664-51361e0fd936.webp"
           }
         },
         "product_j3NqRk": {
           "type": "product",
           "settings": {
-            "product": "white-pink-handpainted-lehenga-set",
+            "product": "falak-gotapatti-georgette-suit-set",
             "second_image": true
           }
         },
         "collection_bic6LL": {
           "type": "collection",
           "settings": {
-            "collection": "lehenga"
+            "collection": "kurti"
           }
         }
       },
