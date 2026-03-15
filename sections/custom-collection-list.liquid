@@ -1,0 +1,522 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .custom-collection-list-inner {
+    width: 100%;
+  }
+
+  /* Collection Card Base Info */
+  .collection-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .collection-card__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+  .collection-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background-color: #f5f5f5;
+  }
+  .collection-card__image,
+  .collection-card__image-wrapper svg.placeholder-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Aspect Ratios */
+  .aspect-square { aspect-ratio: 1/1; }
+  .aspect-portrait { aspect-ratio: 3/4; }
+  .aspect-circle { 
+    aspect-ratio: 1/1; 
+    border-radius: 50%; 
+  }
+
+  /* Circle Sizes */
+  @media screen and (max-width: 749px) {
+    .aspect-circle {
+      width: {{ section.settings.circle_size_mobile }}%;
+      margin: 0 auto;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .aspect-circle {
+      width: {{ section.settings.circle_size_desktop }}%;
+      margin: 0 auto;
+    }
+  }
+
+  /* Title Settings */
+  .align-left .collection-card__title { text-align: left; }
+  .align-center .collection-card__title { text-align: center; }
+  .align-right .collection-card__title { text-align: right; }
+
+  .pos-overlay .collection-card__title {
+    position: absolute;
+    bottom: 12%;
+    left: 10px;
+    right: 10px;
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+
+  .pos-below .collection-card__title {
+    margin: 15px 0 0 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  /* Layouts: Base Styles */
+  .layout-wrapper {
+    width: 100%;
+  }
+
+  .title-wrapper--align-left { text-align: left; }
+  .title-wrapper--align-center { text-align: center; }
+  .title-wrapper--align-right { text-align: right; }
+
+  .collection-item {
+    box-sizing: border-box;
+  }
+
+  .collection-item .collection-card {
+    transition: transform 0.3s ease;
+  }
+  .collection-item .collection-card:hover {
+    transform: translateY(-5px);
+  }
+
+  /* Slider Base (Hidden scrollbar) */
+  .layout-slider {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  .layout-slider::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  /* -------------- MOBILE LAYOUT -------------- */
+  @media screen and (max-width: 749px) {
+    /* Mobile Grid */
+    .mobile-layout-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: {{ section.settings.blocks_alignment }};
+      gap: {{ section.settings.grid_gap_mobile }}px;
+    }
+    .mobile-layout-grid .collection-item {
+      width: calc((100% - ({{ section.settings.grid_cols_mobile }} - 1) * {{ section.settings.grid_gap_mobile }}px) / {{ section.settings.grid_cols_mobile }});
+    }
+
+    /* Mobile Slider */
+    .mobile-layout-slider {
+      gap: {{ section.settings.slider_gap }}px;
+      padding-bottom: 20px; /* Optional spacing for shadow */
+    }
+    .mobile-layout-slider .collection-item {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      /* Calculation to account for gap between item widths */
+      width: calc((100% / {{ section.settings.slider_slides_mobile }}) - ({{ section.settings.slider_gap }}px * ({{ section.settings.slider_slides_mobile }} - 1) / {{ section.settings.slider_slides_mobile }}));
+    }
+  }
+
+  /* -------------- DESKTOP LAYOUT -------------- */
+  @media screen and (min-width: 750px) {
+    /* Desktop Grid */
+    .desktop-layout-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: {{ section.settings.blocks_alignment }};
+      gap: {{ section.settings.grid_gap_desktop }}px;
+    }
+    .desktop-layout-grid .collection-item {
+      width: calc((100% - ({{ section.settings.grid_cols_desktop }} - 1) * {{ section.settings.grid_gap_desktop }}px) / {{ section.settings.grid_cols_desktop }});
+    }
+
+    /* Desktop Slider */
+    .desktop-layout-slider {
+      gap: {{ section.settings.slider_gap }}px;
+      padding-bottom: 20px;
+    }
+    .desktop-layout-slider .collection-item {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: calc((100% / {{ section.settings.slider_slides_desktop }}) - ({{ section.settings.slider_gap }}px * ({{ section.settings.slider_slides_desktop }} - 1) / {{ section.settings.slider_slides_desktop }}));
+    }
+  }
+
+  /* -------------- TABLET (For Desktop Slider) -------------- */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .desktop-layout-slider .collection-item {
+      width: calc((100% / {{ section.settings.slider_slides_tablet }}) - ({{ section.settings.slider_gap }}px * ({{ section.settings.slider_slides_tablet }} - 1) / {{ section.settings.slider_slides_tablet }}));
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient isolate">
+  <div class="section-{{ section.id }}-padding page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="title-wrapper title-wrapper--no-top-margin title-wrapper--align-{{ section.settings.heading_alignment }}">
+        <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="custom-collection-list-inner layout-wrapper desktop-layout-{{ section.settings.layout_desktop }} mobile-layout-{{ section.settings.layout_mobile }} {% if section.settings.layout_desktop == 'slider' or section.settings.layout_mobile == 'slider' %}layout-slider{% endif %}">
+      
+      {%- for block in section.blocks -%}
+        {%- liquid 
+           assign image = block.settings.image | default: block.settings.collection.featured_image
+           assign title = block.settings.title | default: block.settings.collection.title | default: 'Collection name'
+        -%}
+        
+        <div class="collection-item" {{ block.shopify_attributes }}>
+          <div class="collection-card pos-{{ section.settings.title_position }} align-{{ section.settings.title_alignment }}">
+            <a href="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}" class="collection-card__link">
+              
+              <div class="collection-card__image-wrapper aspect-{{ section.settings.image_aspect_ratio }}">
+                {%- if image != blank -%}
+                  <img src="{{ image | image_url: width: 600 }}" 
+                       loading="lazy" 
+                       width="{{ image.width }}" 
+                       height="{{ image.height }}" 
+                       alt="{{ title | escape }}" 
+                       class="collection-card__image">
+                {%- else -%}
+                  {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+                  {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+
+                {%- if section.settings.title_position == 'overlay' -%}
+                  <h3 class="collection-card__title">{{ title }}</h3>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.title_position == 'below' -%}
+                <h3 class="collection-card__title">{{ title }}</h3>
+              {%- endif -%}
+
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Collection List",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Collections",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Dawn Theme General Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "layout_desktop",
+      "label": "Layout Type",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "slider", "label": "Slider" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "label": "Layout Type (Mobile)",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "slider", "label": "Slider" }
+      ],
+      "default": "slider",
+      "info": "Choose the layout type for mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "blocks_alignment",
+      "label": "Blocks Center Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left aligned" },
+        { "value": "center", "label": "Centered on page" }
+      ],
+      "default": "center",
+      "info": "Centers the collection blocks in the page if they don't fill an entire row."
+    },
+    {
+      "type": "header",
+      "content": "Collection text settings"
+    },
+    {
+      "type": "select",
+      "id": "title_position",
+      "label": "Title Position",
+      "options": [
+        { "value": "below", "label": "Below Card" },
+        { "value": "overlay", "label": "On Card (Overlay)" }
+      ],
+      "default": "overlay"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "circle", "label": "Circle" },
+        { "value": "portrait", "label": "Portrait" }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "range",
+      "id": "circle_size_desktop",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Circle Size (Desktop)",
+      "default": 100,
+      "info": "Only applies when Circle aspect ratio is selected"
+    },
+    {
+      "type": "range",
+      "id": "circle_size_mobile",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Circle Size (Mobile)",
+      "default": 100,
+      "info": "Only applies when Circle aspect ratio is selected"
+    },
+    {
+      "type": "header",
+      "content": "Grid Settings",
+      "info": "Settings for grid layout"
+    },
+    {
+      "type": "range",
+      "id": "grid_cols_desktop",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Collections per row (Desktop)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "grid_cols_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Collections per row (Mobile)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between blocks (Desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between blocks (Mobile)",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings",
+      "info": "Settings for slider layout"
+    },
+    {
+      "type": "range",
+      "id": "slider_slides_desktop",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Slides per view (Desktop)",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "slider_slides_tablet",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "label": "Slides per view (Tablet)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slider_gap",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Space between slides",
+      "default": 15
+    },
+    {
+      "type": "text",
+      "id": "slider_slides_mobile",
+      "label": "Slides per view (Mobile)",
+      "default": "2.5",
+      "info": "To make circles bigger, reduce this number (e.g. 2.5). To make them smaller, increase it (e.g. 5.5)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title (Optional)",
+          "info": "Overrides the collection title if provided."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Collection List",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}
