@@ -98,11 +98,52 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "collage_AM7HwV": {
+      "type": "collage",
+      "blocks": {
+        "image_Abng7b": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3_287cac0f-d366-40f7-a558-298e84990d5e.jpg"
+          }
+        },
+        "product_j3NqRk": {
+          "type": "product",
+          "settings": {
+            "product": "white-pink-handpainted-lehenga-set",
+            "second_image": true
+          }
+        },
+        "collection_bic6LL": {
+          "type": "collection",
+          "settings": {
+            "collection": "lehenga"
+          }
+        }
+      },
+      "block_order": [
+        "image_Abng7b",
+        "product_j3NqRk",
+        "collection_bic6LL"
+      ],
+      "name": "t:sections.collage.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "column",
+        "card_styles": "product-card-wrapper",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_collection_slider_8dx9RL",
-    "image_plus_video_WX4dca"
+    "image_plus_video_WX4dca",
+    "collage_AM7HwV"
   ]
 }
