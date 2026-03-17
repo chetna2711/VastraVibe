@@ -32,12 +32,20 @@
             "collection": "lehenga",
             "title": ""
           }
+        },
+        "collection_renDFB": {
+          "type": "collection",
+          "settings": {
+            "collection": "saree",
+            "title": ""
+          }
         }
       },
       "block_order": [
         "collection_yY3DXd",
         "collection_DdxQbm",
-        "collection_dAJ7nJ"
+        "collection_dAJ7nJ",
+        "collection_renDFB"
       ],
       "name": "Custom Collection List",
       "settings": {
