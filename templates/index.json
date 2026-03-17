@@ -16,13 +16,23 @@
           "type": "collection",
           "settings": {
             "collection": "kurti",
+            "image": "shopify://shop_images/72_6c6c5026-30b4-43e1-8ae9-2e45fba2ee0e.webp",
             "title": ""
+          }
+        },
+        "collection_WgVrEL": {
+          "type": "collection",
+          "settings": {
+            "collection": "kurti",
+            "image": "shopify://shop_images/45_37917524-6351-4775-9664-51361e0fd936.webp",
+            "title": "Sarara"
           }
         },
         "collection_DdxQbm": {
           "type": "collection",
           "settings": {
             "collection": "gowns",
+            "image": "shopify://shop_images/dark-blue-sequins-embroidered-evening-gown-with-sweet-heart-neck-jk3222.webp",
             "title": ""
           }
         },
@@ -30,6 +40,7 @@
           "type": "collection",
           "settings": {
             "collection": "lehenga",
+            "image": "shopify://shop_images/45_2_f0e444bc-f235-4916-a991-6d59f480382e.webp",
             "title": ""
           }
         },
@@ -39,13 +50,32 @@
             "collection": "saree",
             "title": ""
           }
+        },
+        "collection_EA7HLm": {
+          "type": "collection",
+          "settings": {
+            "collection": "saree",
+            "image": "shopify://shop_images/20_0e1feeae-8a9e-4d1a-8ec3-caf185d02f7e.webp",
+            "title": "Lyrics"
+          }
+        },
+        "collection_FG9Dee": {
+          "type": "collection",
+          "settings": {
+            "collection": "saree",
+            "image": "shopify://shop_images/01141-m-01_1.webp",
+            "title": "Bride"
+          }
         }
       },
       "block_order": [
         "collection_yY3DXd",
+        "collection_WgVrEL",
         "collection_DdxQbm",
         "collection_dAJ7nJ",
-        "collection_renDFB"
+        "collection_renDFB",
+        "collection_EA7HLm",
+        "collection_FG9Dee"
       ],
       "name": "Custom Collection List",
       "settings": {
