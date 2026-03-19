@@ -561,12 +561,12 @@
 
         <!-- CTAs -->
 
-        <div class="cart__ctas" {{ block.shopify_attributes }}>
-          <div class="drawer__footer-buttons" style="display: flex; gap: 1rem; align-items: stretch;">
+        <div class="cart__ctas" {{ block.shopify_attributes }} style="width: 100%;">
+          <div class="drawer__footer-buttons" style="display: flex; gap: 1rem; align-items: stretch; width: 100%;">
             <a
               href="{{ routes.cart_url }}"
               class="button button--secondary"
-              style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; height: auto;"
+              style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; height: auto; max-width: none;"
             >
               {{ 'sections.cart.view_cart' | t }}
             </a>
@@ -576,7 +576,7 @@
               class="cart__checkout-button button"
               name="checkout"
               form="CartDrawer-Form"
-              style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; height: auto;"
+              style="flex: 1; margin: 0; display: flex; align-items: center; justify-content: center; height: auto; max-width: none;"
               {% if cart == empty %}
                 disabled
               {% endif %}
