@@ -59,13 +59,65 @@
       "settings": {
         "layout": "full_bleed",
         "slide_height": "adapt_image",
-        "slider_visual": "counter",
-        "auto_rotate": true,
-        "show_arrows": true,
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "show_arrows": false,
         "change_slides_speed": 5,
         "image_behavior": "none",
         "show_text_below": true,
         "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "marquee_slider_RJ7HxM": {
+      "type": "marquee-slider",
+      "blocks": {
+        "text_xtFC6g": {
+          "type": "text",
+          "settings": {
+            "text": "New Collection Available Now",
+            "show_separator": true
+          }
+        },
+        "text_jADw4n": {
+          "type": "text",
+          "settings": {
+            "text": "Limited Time Deals",
+            "show_separator": true
+          }
+        },
+        "text_x7B6c4": {
+          "type": "text",
+          "settings": {
+            "text": "Flat 50% Off",
+            "show_separator": true
+          }
+        }
+      },
+      "block_order": [
+        "text_xtFC6g",
+        "text_jADw4n",
+        "text_x7B6c4"
+      ],
+      "name": "Marquee Slider",
+      "settings": {
+        "bg_color": "#000000",
+        "text_color": "#ffffff",
+        "speed": 20,
+        "direction": "left",
+        "pause_on_hover": true,
+        "gap": 40,
+        "font_size": 16,
+        "font_size_mobile": 14,
+        "font_weight": "400",
+        "text_transform": "uppercase",
+        "letter_spacing": 1,
+        "image_height": 30,
+        "image_height_mobile": 20,
+        "separator_text": "•",
+        "border_thickness": 0,
+        "border_color": "#eeeeee",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
     "custom_collection_list_ttr73H": {
@@ -378,6 +430,7 @@
   },
   "order": [
     "slideshow_JjNx8d",
+    "marquee_slider_RJ7HxM",
     "custom_collection_list_ttr73H",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
