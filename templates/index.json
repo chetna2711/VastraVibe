@@ -9,6 +9,65 @@
  */
 {
   "sections": {
+    "slideshow_JjNx8d": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_eYBHH9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/desktop-libas_a86e3f1e-d958-4188-b211-63bb00f5ece1.webp",
+            "image_mobile": "shopify://shop_images/mobile-libas.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        },
+        "slide_yhkQfp": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/India_in_every_drape.webp",
+            "image_mobile": "shopify://shop_images/India_in_every_drape_M.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        }
+      },
+      "block_order": [
+        "slide_eYBHH9",
+        "slide_yhkQfp"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": true,
+        "show_arrows": true,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
     "custom_collection_list_ttr73H": {
       "type": "custom-collection-list",
       "blocks": {
@@ -198,6 +257,7 @@
     }
   },
   "order": [
+    "slideshow_JjNx8d",
     "custom_collection_list_ttr73H",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
