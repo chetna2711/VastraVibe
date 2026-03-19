@@ -1,0 +1,511 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    background-color: {{ section.settings.section_bg_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .customer-reviews-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .customer-reviews-section .title-wrapper {
+    margin-bottom: 4rem;
+  }
+
+  .customer-reviews-section .swiper {
+    width: 100%;
+    padding: 20px 0 50px;
+  }
+
+  .review-card {
+    height: 100%;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .review-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .review-card__header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .review-card__image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .review-card__image--round {
+    border-radius: 50%;
+  }
+
+  .review-card__image--square {
+    border-radius: 8px;
+  }
+
+  .review-card__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .review-card__name {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .review-card__verified {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    color: #4CAF50;
+    margin-top: 0.2rem;
+  }
+
+  .review-card__verified svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  .review-card__stars {
+    display: flex;
+    gap: 0.2rem;
+    color: #ffcc00;
+  }
+
+  .review-card__stars svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .review-card__content {
+    flex-grow: 1;
+  }
+
+  .review-card__title {
+    margin: 0 0 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  .review-card__text {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  .review-card__location {
+    margin-top: auto;
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+
+  .customer-reviews-section__slider-wrapper {
+    position: relative;
+  }
+
+  .customer-reviews-section .swiper-button-next,
+  .customer-reviews-section .swiper-button-prev {
+    background: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    color: black;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    margin: 0; /* Reset default swiper margin */
+  }
+
+  .customer-reviews-section .swiper-button-next {
+    right: -22px;
+  }
+
+  .customer-reviews-section .swiper-button-prev {
+    left: -22px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .customer-reviews-section .swiper-button-next {
+      right: 10px;
+    }
+    .customer-reviews-section .swiper-button-prev {
+      left: 10px;
+    }
+  }
+
+  .customer-reviews-section .swiper-button-next::after,
+  .customer-reviews-section .swiper-button-prev::after {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .customer-reviews-section .swiper-pagination-bullet-active {
+    background: black;
+  }
+
+  .review-divider {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin: 0.5rem 0;
+  }
+{%- endstyle -%}
+
+<div class="customer-reviews-section section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="title-wrapper center">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="description rte">{{ section.settings.description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="customer-reviews-section__slider-wrapper">
+      <div class="swiper swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="review-card" style="background-color: {{ block.settings.card_bg_color }}; color: {{ block.settings.text_color }};">
+                <div class="review-card__header">
+                  {%- if block.settings.image != blank -%}
+                    <img 
+                      src="{{ block.settings.image | image_url: width: 120 }}" 
+                      alt="{{ block.settings.customer_name | escape }}"
+                      class="review-card__image review-card__image--{{ block.settings.image_shape }}"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'review-card__image review-card__image--round placeholder-svg' }}
+                  {%- endif -%}
+                  
+                  <div class="review-card__info">
+                    <h3 class="review-card__name">{{ block.settings.customer_name }}</h3>
+                    {%- if block.settings.show_verified -%}
+                      <div class="review-card__verified">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        Verified Buyer
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="review-divider" style="border-top-color: {{ block.settings.text_color | color_modify: 'alpha', 0.1 }};"></div>
+
+                <div class="review-card__stars">
+                  {%- for i in (1..5) -%}
+                    {%- if i <= block.settings.rating -%}
+                      <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {%- else -%}
+                      <svg viewBox="0 0 24 24" style="opacity: 0.2;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+                <div class="review-card__content">
+                  {%- if block.settings.review_title != blank -%}
+                    <h4 class="review-card__title">{{ block.settings.review_title }}</h4>
+                  {%- endif -%}
+                  {%- if block.settings.review_text != blank -%}
+                    <div class="review-card__text rte">{{ block.settings.review_text }}</div>
+                  {%- endif -%}
+                </div>
+
+                {%- if block.settings.location != blank -%}
+                  <div class="review-card__location">{{ block.settings.location }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- if section.settings.show_arrows -%}
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      {%- endif -%}
+      
+      {%- if section.settings.show_pagination -%}
+        <div class="swiper-pagination"></div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const swiperReview = new Swiper('.swiper-{{ section.id }}', {
+      slidesPerView: {{ section.settings.slides_mobile }},
+      spaceBetween: 20,
+      loop: {{ section.settings.enable_loop }},
+      {% if section.settings.enable_autoplay %}
+      autoplay: {
+        delay: {{ section.settings.autoplay_delay | times: 1000 }},
+        disableOnInteraction: false,
+      },
+      {% endif %}
+      pagination: {
+        el: '.swiper-{{ section.id }} ~ .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-{{ section.id }} ~ .swiper-button-next',
+        prevEl: '.swiper-{{ section.id }} ~ .swiper-button-prev',
+      },
+      breakpoints: {
+        750: {
+          slidesPerView: {{ section.settings.slides_tablet }},
+        },
+        990: {
+          slidesPerView: {{ section.settings.slides_desktop }},
+        }
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Happy Customers",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "default": "<p>Read what our customers have to say about their experience with us.</p>",
+      "label": "Description"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "default": "#ffffff",
+      "label": "Section Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "default": true,
+      "label": "Show Slider Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "default": true,
+      "label": "Show Pagination Dots"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "default": true,
+      "label": "Enable Continuous Loop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "default": false,
+      "label": "Enable Autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "label": "Autoplay Delay"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Slides per view (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "label": "Slides per view (Tablet)"
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.1,
+      "label": "Slides per view (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer Image"
+        },
+        {
+          "type": "select",
+          "id": "image_shape",
+          "options": [
+            { "value": "round", "label": "Round" },
+            { "value": "square", "label": "Square" }
+          ],
+          "default": "round",
+          "label": "Image Shape"
+        },
+        {
+          "type": "text",
+          "id": "customer_name",
+          "default": "Customer Name",
+          "label": "Customer Name"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "default": true,
+          "label": "Show Verified Badge"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Review Rating"
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "default": "Review Title",
+          "label": "Review Title"
+        },
+        {
+          "type": "richtext",
+          "id": "review_text",
+          "default": "<p>Share your customer's review here. This is a great place to show off your products and services.</p>",
+          "label": "Review Text"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "default": "City, Country",
+          "label": "Customer Location"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_color",
+          "default": "#f9f9f9",
+          "label": "Card Background Color"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "default": "#000000",
+          "label": "Text Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

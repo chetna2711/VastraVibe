@@ -1,4 +1,10 @@
 {%- style -%}
+
+.custom-circle-collection-container{
+  margin:0 auto;
+  padding:0 80px;
+
+}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
@@ -113,6 +119,7 @@
   .layout-slider {
     display: flex;
     overflow-x: auto;
+    justify-content:center;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scrollbar-width: none; /* Firefox */
@@ -124,6 +131,14 @@
 
   /* -------------- MOBILE LAYOUT -------------- */
   @media screen and (max-width: 749px) {
+
+    .custom-circle-collection-container{
+      padding:0;
+    }
+
+    .layout-slider{
+      justify-content:flex-start;
+    }
     /* Mobile Grid */
     .mobile-layout-grid {
       display: flex;
@@ -181,7 +196,7 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient isolate">
+<div class="color-{{ section.settings.color_scheme }} gradient isolate custom-circle-collection-container">
   <div class="section-{{ section.id }}-padding page-width">
     {%- if section.settings.title != blank -%}
       <div class="title-wrapper title-wrapper--no-top-margin title-wrapper--align-{{ section.settings.heading_alignment }}">

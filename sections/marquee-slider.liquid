@@ -1,0 +1,335 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .marquee-slider--{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    user-select: none;
+    border-top: {{ section.settings.border_thickness }}px solid {{ section.settings.border_color }};
+    border-bottom: {{ section.settings.border_thickness }}px solid {{ section.settings.border_color }};
+  }
+
+  .marquee-slider__inner {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee {{ section.settings.speed }}s linear infinite;
+    {% if section.settings.direction == 'right' %}
+      animation-direction: reverse;
+    {% endif %}
+  }
+
+  {% if section.settings.pause_on_hover %}
+  .marquee-slider--{{ section.id }}:hover .marquee-slider__inner {
+    animation-play-state: paused;
+  }
+  {% endif %}
+
+  .marquee-slider__item {
+    display: flex;
+    align-items: center;
+    padding: 0 {{ section.settings.gap | divided_by: 2 }}px;
+    flex-shrink: 0;
+  }
+
+  .marquee-slider__image {
+    height: {{ section.settings.image_height }}px;
+    width: auto;
+    margin-right: 1rem;
+    object-fit: contain;
+  }
+
+  .marquee-slider__text {
+    font-size: {{ section.settings.font_size }}px;
+    font-weight: {{ section.settings.font_weight }};
+    text-transform: {{ section.settings.text_transform }};
+    letter-spacing: {{ section.settings.letter_spacing }}px;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media screen and (max-width: 749px) {
+    .marquee-slider__text {
+      font-size: {{ section.settings.font_size_mobile }}px;
+    }
+    .marquee-slider__image {
+      height: {{ section.settings.image_height_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="marquee-slider marquee-slider--{{ section.id }} section-{{ section.id }}-padding">
+  <div class="marquee-slider__inner">
+    {%- comment -%} Triple the content to ensure continuous scrolling even on wide screens {%- endcomment -%}
+    {%- for i in (1..3) -%}
+      {%- for block in section.blocks -%}
+        <div class="marquee-slider__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img 
+              src="{{ block.settings.image | image_url: height: 100 }}" 
+              alt="{{ block.settings.text | escape }}"
+              class="marquee-slider__image"
+              loading="lazy"
+            >
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <span class="marquee-slider__text">{{ block.settings.text }}</span>
+          {%- endif -%}
+          {%- if block.settings.show_separator -%}
+            <span class="marquee-slider__separator" style="margin-left: {{ section.settings.gap | divided_by: 2 }}px; opacity: 0.5;">
+              {{ section.settings.separator_text }}
+            </span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee Slider",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "s",
+      "default": 20,
+      "label": "Animation Speed (Lower is faster)"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left",
+      "label": "Direction"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "default": true,
+      "label": "Pause on hover"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 10,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 40,
+      "label": "Gap between items"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "label": "Font size"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 14,
+      "label": "Font size (Mobile)"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400",
+      "label": "Font weight"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase",
+      "label": "Text transform"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "label": "Letter spacing"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 10,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 30,
+      "label": "Image height"
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20,
+      "label": "Image height (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Separators"
+    },
+    {
+      "type": "text",
+      "id": "separator_text",
+      "default": "•",
+      "label": "Separator text/character"
+    },
+    {
+      "type": "header",
+      "content": "Borders"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "label": "Border thickness"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20,
+      "label": "Padding Bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping on orders over $50"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon/Image (Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_separator",
+          "label": "Show separator after this item",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Slider",
+      "blocks": [
+        { "type": "text", "settings": { "text": "New Collection Available Now" } },
+        { "type": "text", "settings": { "text": "Limited Time Deals" } },
+        { "type": "text", "settings": { "text": "Flat 50% Off" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
