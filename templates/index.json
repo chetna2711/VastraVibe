@@ -9,6 +9,117 @@
  */
 {
   "sections": {
+    "slideshow_JjNx8d": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_eYBHH9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/desktop-libas_a86e3f1e-d958-4188-b211-63bb00f5ece1.webp",
+            "image_mobile": "shopify://shop_images/mobile-libas.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        },
+        "slide_yhkQfp": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/India_in_every_drape.webp",
+            "image_mobile": "shopify://shop_images/India_in_every_drape_M.webp",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        }
+      },
+      "block_order": [
+        "slide_eYBHH9",
+        "slide_yhkQfp"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "dots",
+        "auto_rotate": false,
+        "show_arrows": false,
+        "change_slides_speed": 5,
+        "image_behavior": "none",
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
+    },
+    "marquee_slider_RJ7HxM": {
+      "type": "marquee-slider",
+      "blocks": {
+        "text_xtFC6g": {
+          "type": "text",
+          "settings": {
+            "text": "New Collection Available Now",
+            "show_separator": true
+          }
+        },
+        "text_jADw4n": {
+          "type": "text",
+          "settings": {
+            "text": "Limited Time Deals",
+            "show_separator": true
+          }
+        },
+        "text_x7B6c4": {
+          "type": "text",
+          "settings": {
+            "text": "Flat 50% Off",
+            "show_separator": true
+          }
+        }
+      },
+      "block_order": [
+        "text_xtFC6g",
+        "text_jADw4n",
+        "text_x7B6c4"
+      ],
+      "name": "Marquee Slider",
+      "settings": {
+        "bg_color": "#000000",
+        "text_color": "#ffffff",
+        "speed": 20,
+        "direction": "left",
+        "pause_on_hover": true,
+        "gap": 40,
+        "font_size": 16,
+        "font_size_mobile": 14,
+        "font_weight": "400",
+        "text_transform": "uppercase",
+        "letter_spacing": 1,
+        "image_height": 30,
+        "image_height_mobile": 20,
+        "separator_text": "•",
+        "border_thickness": 0,
+        "border_color": "#eeeeee",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "custom_collection_list_ttr73H": {
       "type": "custom-collection-list",
       "blocks": {
@@ -195,12 +306,135 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "customer_reviews_XbUGwB": {
+      "type": "customer-reviews",
+      "blocks": {
+        "review_4VawAK": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/shopping_3.webp",
+            "image_shape": "round",
+            "customer_name": "Prachi Singh",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "Voices of Elegance",
+            "review_text": "<p>Every outfit tells a story—hear directly from customers who celebrate culture with our handcrafted traditional wear.</p>",
+            "location": "Surat, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        },
+        "review_JnfGxe": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/TSB1039_440-RUST_RED_1.avif",
+            "image_shape": "round",
+            "customer_name": "Kruti Patel",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "What Our Customers Feel",
+            "review_text": "<p>More than just clothing—discover heartfelt experiences of style, tradition, and satisfaction shared by our community.</p>",
+            "location": "Vadodara, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        },
+        "review_KHDyNb": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/45_6e101108-d6cf-4da4-a71a-0ac79f64d356.webp",
+            "image_shape": "round",
+            "customer_name": "Customer Name",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "Heritage Loved by You",
+            "review_text": "<p>Real words from real people who cherish tradition. Explore how our designs bring heritage, comfort, and confidence together.</p>",
+            "location": "Mumbai, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        },
+        "review_Hpzx9b": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/0H8A1066.jpg",
+            "image_shape": "round",
+            "customer_name": "Sweata Sinha",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "Draped in Trust",
+            "review_text": "<p>See how our timeless pieces become part of your special moments, blending tradition with everyday grace.</p>",
+            "location": "Rajkot, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        },
+        "review_rPcFBz": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/3_287cac0f-d366-40f7-a558-298e84990d5e.jpg",
+            "image_shape": "round",
+            "customer_name": "Aarti Manohtra",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "Tradition, Through Your Eyes",
+            "review_text": "<p>Honest reviews from those who wear our culture with pride, elegance, and joy.</p>",
+            "location": "Ahemdabad, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        },
+        "review_Y8Ggia": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/TSB702_425-RANI_1.avif",
+            "image_shape": "round",
+            "customer_name": "Vidhi Bhatiya",
+            "show_verified": true,
+            "rating": 5,
+            "review_title": "Stories Woven in Style",
+            "review_text": "<p>From celebrations to everyday wear, hear how our outfits become a part of your journey.</p>",
+            "location": "Goa, India",
+            "card_bg_color": "#f9f9f9",
+            "text_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "review_4VawAK",
+        "review_JnfGxe",
+        "review_KHDyNb",
+        "review_Hpzx9b",
+        "review_rPcFBz",
+        "review_Y8Ggia"
+      ],
+      "name": "Customer Reviews",
+      "settings": {
+        "heading": "Happy Customers",
+        "heading_size": "h1",
+        "description": "<p>Read what our customers have to say about their experience with us.</p>",
+        "section_bg_color": "#ffffff",
+        "show_arrows": true,
+        "show_pagination": true,
+        "enable_loop": true,
+        "enable_autoplay": false,
+        "autoplay_delay": 5,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 1.1,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
+    "slideshow_JjNx8d",
+    "marquee_slider_RJ7HxM",
     "custom_collection_list_ttr73H",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
-    "collage_AM7HwV"
+    "collage_AM7HwV",
+    "customer_reviews_XbUGwB"
   ]
 }
