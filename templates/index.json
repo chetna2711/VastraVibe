@@ -418,7 +418,7 @@
         "show_arrows": true,
         "show_pagination": true,
         "enable_loop": true,
-        "enable_autoplay": false,
+        "enable_autoplay": true,
         "autoplay_delay": 5,
         "slides_desktop": 4,
         "slides_tablet": 2,
