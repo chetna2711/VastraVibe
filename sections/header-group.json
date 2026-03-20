@@ -14,6 +14,9 @@
     "header": {
       "type": "header",
       "settings": {
+        "header_style": "classic",
+        "enable_transparent_header": false,
+        "transparent_text_color": "#ffffff",
         "logo_position": "middle-left",
         "mobile_logo_position": "center",
         "menu": "main-menu",
@@ -29,9 +32,67 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "announcement_bar_KXYzCT": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_mcmpMV": {
+          "type": "announcement",
+          "settings": {
+            "text": "Festive Sale: Flat 15% OFF on all Sarees & Kurtis! ",
+            "link": ""
+          }
+        },
+        "announcement_NFw7n8": {
+          "type": "announcement",
+          "settings": {
+            "text": "Buy 2 Premium Kurtis, Get 1 Free | Limited Time Only!",
+            "link": ""
+          }
+        },
+        "announcement_9eNhAb": {
+          "type": "announcement",
+          "settings": {
+            "text": "remium Quality Ethnic Wear | Easy 7-Day Returns & Exchanges",
+            "link": ""
+          }
+        },
+        "announcement_E84E8a": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Worldwide Shipping on Orders Over ₹5,000 / $100!",
+            "link": ""
+          }
+        },
+        "announcement_R6CAXn": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free Shipping Across India | COD Available!",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_mcmpMV",
+        "announcement_NFw7n8",
+        "announcement_9eNhAb",
+        "announcement_E84E8a",
+        "announcement_R6CAXn"
+      ],
+      "name": "t:sections.announcement-bar.presets.name",
+      "settings": {
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "color_scheme": "",
+        "show_line_separator": false,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
     }
   },
   "order": [
+    "announcement_bar_KXYzCT",
     "header"
   ]
 }
