@@ -14,33 +14,41 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "image_96nMTp": {
+        "image_giF8FB": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Mar_17_2026_10_45_22_PM.png",
-            "image_width": 245,
-            "alignment": "center"
+            "image_width": 150,
+            "alignment": ""
+          }
+        },
+        "link_list_yLjLzw": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
           }
         },
         "link_list_N8A8fH": {
           "type": "link_list",
           "settings": {
-            "heading": "Quick links",
-            "menu": "main-menu"
+            "heading": "Support",
+            "menu": "support"
           }
         },
-        "text_qe6FAR": {
-          "type": "text",
+        "link_list_7BkNdq": {
+          "type": "link_list",
           "settings": {
-            "heading": "Our Heritage",
-            "subtext": "<p><strong>Timeless Craft, Modern Grace<br/><br/></strong>Our brand is dedicated to preserving the essence of traditional fashion through refined craftsmanship and elegant designs. We create pieces that connect generations and elevate every occasion.<br/></p>"
+            "heading": "Legal",
+            "menu": "legal"
           }
         }
       },
       "block_order": [
-        "image_96nMTp",
+        "image_giF8FB",
+        "link_list_yLjLzw",
         "link_list_N8A8fH",
-        "text_qe6FAR"
+        "link_list_7BkNdq"
       ],
       "settings": {
         "color_scheme": "scheme-4",
