@@ -416,7 +416,7 @@
         "description": "<p>Read what our customers have to say about their experience with us.</p>",
         "section_bg_color": "#ffffff",
         "show_arrows": true,
-        "show_pagination": true,
+        "show_pagination": false,
         "enable_loop": true,
         "enable_autoplay": true,
         "autoplay_delay": 5,
