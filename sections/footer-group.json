@@ -18,6 +18,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Mar_17_2026_10_45_22_PM.png",
+            "heading": "",
+            "subtext": "<p><strong>About Us – Vastravibe</strong></p><p>At Vastravibe, we celebrate the timeless beauty of traditional women’s fashion with a modern touch. Our collection brings together elegant kurtis, graceful sarees, stunning lehengas, and luxurious bridal wear—each designed to reflect culture, confidence, and individuality.</p><p>We believe every woman deserves to feel special, whether it’s a festive occasion, a wedding, or everyday elegance. That’s why we focus on quality fabrics, intricate designs, and comfortable fits that blend tradition with today’s style.</p>",
             "image_width": 150,
             "alignment": ""
           }
