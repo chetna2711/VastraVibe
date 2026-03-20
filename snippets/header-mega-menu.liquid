@@ -5,6 +5,38 @@
   {% render 'header-mega-menu' %}
 {% endcomment %}
 
+<style>
+  .mega-menu__image-wrapper {
+    display: block;
+    width: 100%;
+    position: relative;
+    padding-bottom: 125%; /* Perfect 4:5 aspect ratio for clothing */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: #f4f4f4;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  
+  .mega-menu__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .mega-menu__list > li:hover .mega-menu__image {
+    transform: scale(1.05);
+  }
+
+  .mega-menu__link--level-2 {
+    font-weight: 600;
+  }
+</style>
+
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
@@ -36,6 +68,18 @@
                 >
                   {%- for childlink in link.links -%}
                     <li>
+                      {%- if childlink.type == 'collection_link' and childlink.object.image != blank -%}
+                        <a href="{{ childlink.url }}" class="mega-menu__image-link" tabindex="-1">
+                          <div class="mega-menu__image-wrapper">
+                            <img 
+                              src="{{ childlink.object.image | image_url: width: 400 }}" 
+                              alt="{{ childlink.title | escape }}" 
+                              class="mega-menu__image" 
+                              loading="lazy"
+                            >
+                          </div>
+                        </a>
+                      {%- endif -%}
                       <a
                         id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
                         href="{{ childlink.url }}"

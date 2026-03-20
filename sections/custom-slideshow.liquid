@@ -174,22 +174,47 @@
   /* Navigation Customization */
   .custom-slideshow .swiper-button-next,
   .custom-slideshow .swiper-button-prev {
-    color: #fff;
-    background: rgba(0,0,0,0.2);
-    width: 50px;
-    height: 50px;
+    color: #000;
+    background: #fff;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    transition: background 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .custom-slideshow .swiper-button-next:hover,
   .custom-slideshow .swiper-button-prev:hover {
-    background: rgba(0,0,0,0.5);
+    background: #f0f0f0;
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  .custom-slideshow .swiper-button-next {
+    right: 20px;
+  }
+
+  .custom-slideshow .swiper-button-prev {
+    left: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-slideshow .swiper-button-next,
+    .custom-slideshow .swiper-button-prev {
+      width: 36px;
+      height: 36px;
+    }
+    .custom-slideshow .swiper-button-next { right: 10px; }
+    .custom-slideshow .swiper-button-prev { left: 10px; }
   }
 
   .custom-slideshow .swiper-button-next::after,
   .custom-slideshow .swiper-button-prev::after {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
 
@@ -279,41 +304,69 @@
     </div>
 
     {%- if section.settings.show_arrows -%}
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
+      <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
     {%- endif -%}
 
     {%- if section.settings.show_pagination -%}
-      <div class="swiper-pagination"></div>
+      <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
     {%- endif -%}
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiperSlideshow = new Swiper('.swiper-{{ section.id }}', {
+  function initSwiper{{ section.id | replace: '-', '_' }}() {
+    const swiperEl = document.querySelector('.swiper-{{ section.id }}');
+    if (!swiperEl) return;
+
+    if (swiperEl.swiper) {
+      swiperEl.swiper.destroy(true, true);
+    }
+
+    const swiperSlideshow = new Swiper(swiperEl, {
       slidesPerView: 1,
       loop: true,
       effect: 'fade',
       fadeEffect: {
         crossFade: true
       },
+      observer: true,
+      observeParents: true,
       {% if section.settings.auto_rotate %}
       autoplay: {
         delay: {{ section.settings.change_slides_speed | times: 1000 }},
         disableOnInteraction: false,
       },
       {% endif %}
+      {% if section.settings.show_pagination %}
       pagination: {
-        el: '.swiper-{{ section.id }} .swiper-pagination',
+        el: '.swiper-pagination-{{ section.id }}',
         clickable: true,
       },
+      {% endif %}
+      {% if section.settings.show_arrows %}
       navigation: {
-        nextEl: '.swiper-{{ section.id }} .swiper-button-next',
-        prevEl: '.swiper-{{ section.id }} .swiper-button-prev',
+        nextEl: '.swiper-button-next-{{ section.id }}',
+        prevEl: '.swiper-button-prev-{{ section.id }}',
       },
+      {% endif %}
     });
-  });
+  }
+
+  // Initialize on load
+  document.addEventListener('DOMContentLoaded', initSwiper{{ section.id | replace: '-', '_' }});
+
+  // Theme Editor re-initialization
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initSwiper{{ section.id | replace: '-', '_' }}();
+      }
+    });
+  }
+
+  // Backup for editor changes
+  initSwiper{{ section.id | replace: '-', '_' }}();
 </script>
 
 {% schema %}

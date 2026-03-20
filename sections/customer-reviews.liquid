@@ -134,6 +134,7 @@
 
   .customer-reviews-section .swiper-button-next,
   .customer-reviews-section .swiper-button-prev {
+    position: absolute;
     background: white;
     width: 44px;
     height: 44px;
@@ -144,6 +145,9 @@
     transform: translateY(-50%);
     z-index: 10;
     margin: 0; /* Reset default swiper margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .customer-reviews-section .swiper-button-next {
@@ -155,11 +159,17 @@
   }
 
   @media screen and (max-width: 1100px) {
+    .customer-reviews-section {
+      overflow: visible;
+    }
+    .customer-reviews-section__slider-wrapper {
+      padding: 0 15px;
+    }
     .customer-reviews-section .swiper-button-next {
-      right: 10px;
+      right: 5px;
     }
     .customer-reviews-section .swiper-button-prev {
-      left: 10px;
+      left: 5px;
     }
   }
 
@@ -252,37 +262,50 @@
       </div>
 
       {%- if section.settings.show_arrows -%}
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
+        <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
       {%- endif -%}
       
       {%- if section.settings.show_pagination -%}
-        <div class="swiper-pagination"></div>
+        <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
       {%- endif -%}
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiperReview = new Swiper('.swiper-{{ section.id }}', {
+  function initSwiper{{ section.id | replace: '-', '_' }}() {
+    const swiperEl = document.querySelector('.swiper-{{ section.id }}');
+    if (!swiperEl) return;
+
+    if (swiperEl.swiper) {
+      swiperEl.swiper.destroy(true, true);
+    }
+
+    const swiperReview = new Swiper(swiperEl, {
       slidesPerView: {{ section.settings.slides_mobile }},
       spaceBetween: 20,
       loop: {{ section.settings.enable_loop }},
+      observer: true,
+      observeParents: true,
       {% if section.settings.enable_autoplay %}
       autoplay: {
         delay: {{ section.settings.autoplay_delay | times: 1000 }},
         disableOnInteraction: false,
       },
       {% endif %}
+      {% if section.settings.show_pagination %}
       pagination: {
-        el: '.swiper-{{ section.id }} ~ .swiper-pagination',
+        el: '.swiper-pagination-{{ section.id }}',
         clickable: true,
       },
+      {% endif %}
+      {% if section.settings.show_arrows %}
       navigation: {
-        nextEl: '.swiper-{{ section.id }} ~ .swiper-button-next',
-        prevEl: '.swiper-{{ section.id }} ~ .swiper-button-prev',
+        nextEl: '.swiper-button-next-{{ section.id }}',
+        prevEl: '.swiper-button-prev-{{ section.id }}',
       },
+      {% endif %}
       breakpoints: {
         750: {
           slidesPerView: {{ section.settings.slides_tablet }},
@@ -292,7 +315,22 @@
         }
       }
     });
-  });
+  }
+
+  // Initialize on load
+  document.addEventListener('DOMContentLoaded', initSwiper{{ section.id | replace: '-', '_' }});
+  
+  // Theme Editor re-initialization
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initSwiper{{ section.id | replace: '-', '_' }}();
+      }
+    });
+  }
+
+  // Backup for editor changes where DOMContentLoaded might not fire
+  initSwiper{{ section.id | replace: '-', '_' }}();
 </script>
 
 {% schema %}
