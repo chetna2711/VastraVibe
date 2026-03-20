@@ -279,7 +279,7 @@
         "product_j3NqRk": {
           "type": "product",
           "settings": {
-            "product": "falak-gotapatti-georgette-suit-set",
+            "product": "neria-orange-tier-suit-set",
             "second_image": true
           }
         },
@@ -299,9 +299,9 @@
       "settings": {
         "heading": "",
         "heading_size": "h1",
-        "desktop_layout": "right",
+        "desktop_layout": "left",
         "mobile_layout": "column",
-        "card_styles": "product-card-wrapper",
+        "card_styles": "none",
         "color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
