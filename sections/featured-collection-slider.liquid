@@ -344,6 +344,94 @@
     min-width: fit-content;
     white-space: nowrap;
   }
+
+  .quick-view-modal__info h2 {
+    margin-bottom: 5px;
+  }
+
+  /* Quick View Buttons */
+  .quick-view-modal__info .btn-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .quick-view-modal__info .add-to-cart {
+    flex: 1;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    height: 46px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 1.2rem;
+  }
+
+  .quick-view-modal__info .add-to-cart:hover {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn:hover {
+    border-color: rgba(var(--color-foreground), 0.3);
+    transform: scale(1.05);
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn .icon--filled {
+    display: none;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn.is-active {
+    background: #000;
+    border-color: #000;
+    color: #fff;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn.is-active .icon--outline {
+    display: none;
+  }
+
+  .quick-view-modal__info .quick-view-wishlist-btn.is-active .icon--filled {
+    display: block;
+  }
+
+  .quick-view-modal__info .view-details {
+    display: block;
+    margin-top: 1.5rem;
+    font-weight: 500;
+    color: rgba(var(--color-foreground), 0.7);
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient isolate">
@@ -514,18 +602,6 @@
     }
   });
 
-  function toggleWishlist(e, id) {
-    e.stopPropagation();
-    const btn = e.currentTarget;
-    if (btn.classList.contains('active')) {
-      btn.classList.remove('active');
-      localStorage.removeItem('wishlist_' + id);
-    } else {
-      btn.classList.add('active');
-      localStorage.setItem('wishlist_' + id, 'true');
-    }
-  }
-
   function openQuickView(handle, sectionId, element) {
     const modal = document.getElementById('QuickView-' + sectionId);
     if (!modal) return;
@@ -596,15 +672,7 @@
           maximumFractionDigits: 0
         });
 
-        const isWishlisted = localStorage.getItem('wishlist_' + product.id);
-        const activeClass = isWishlisted ? 'active' : '';
-        const heartIcon = document.getElementById('WishlistIconTemplate-{{ section.id }}').innerHTML;
-
-        // Thumbnails grid (show images after the featured one)
-        const otherImages = product.media.filter(m => m.media_type === 'image').slice(1, 3);
-        const thumbnailsHtml = otherImages.map(m => `
-          <img src="${m.src}" style="width: calc(50% - 10px); aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; border: 1px solid #eee;">
-        `).join('');
+        const activeClass = window.VVWishlist && window.VVWishlist.has(product.handle) ? 'is-active' : '';
 
         infoWrapper.innerHTML = `
           <div class="quick-view-gallery" style="display: flex; gap: 10px; margin-bottom: 20px;">
@@ -616,13 +684,18 @@
           </div>
           <div class="price" style="margin-bottom: 15px; font-size: 2.22rem;">${priceFormatted}</div>
           <div class="description" style="font-size: 1.4rem; color: #666; line-height: 1.6; margin-bottom: 20px;">${product.description ? product.description.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : ''}</div>
-          <div class="btn-group" style="margin-top: 20px; display: flex; align-items: center; gap: 8px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
-            <button class="add-to-cart" onclick="addToCart(${product.variants[0].id}, '${sectionId}')" style="background: #000; color: #fff; border: none; height: 45px; padding: 0 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 2; font-size: 1.3rem;">Add to cart</button>
-            <button class="secondary-btn ${activeClass}" onclick="toggleWishlist(event, '${product.id}')" style="flex: 0 0 45px;">
-               ${heartIcon}
+          <div class="btn-group">
+            <button class="add-to-cart" onclick="addToCart(${product.variants[0].id}, '${sectionId}')">Add to cart</button>
+            <button class="quick-view-wishlist-btn ${activeClass}" data-wishlist-handle="${product.handle}" aria-label="Add to wishlist">
+               <svg class="icon--outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <svg class="icon--filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
             </button>
           </div>
-          <a href="${product.url}" class="view-details" style="display: block; margin-top: 15px; font-weight: 600; color: #000; font-size: 1.3rem;">View details >></a>
+          <a href="${product.url}" class="view-details">View details >></a>
         `;
 
         // Initialize modal swiper after content is injected

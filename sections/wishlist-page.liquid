@@ -1,0 +1,424 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  /* ── Page layout ── */
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .wishlist-page {
+  }
+
+  .wishlist-page__heading {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .wishlist-page__count {
+    text-align: center;
+    color: rgba(var(--color-foreground), 0.6);
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+    min-height: 1.6rem;
+  }
+
+  /* ── Empty state ── */
+  .wishlist-empty {
+    text-align: center;
+    padding: 8rem 2rem;
+    display: none;
+  }
+
+  .wishlist-empty.is-visible {
+    display: block;
+  }
+
+  .wishlist-empty__icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 2rem;
+    opacity: 0.25;
+  }
+
+  .wishlist-empty__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .wishlist-empty__subtitle {
+    font-size: 1.5rem;
+    opacity: 0.6;
+    margin-bottom: 3rem;
+  }
+
+  .wishlist-empty__cta.button {
+    display: inline-flex;
+    padding: 1.2rem 3rem;
+    font-size: 1.4rem;
+  }
+
+  /* ── Product grid ── */
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 989px) {
+    .wishlist-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wishlist-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+  }
+
+  /* ── Card wrapper with remove button ── */
+  .wishlist-card-wrap {
+    position: relative;
+  }
+
+  .wishlist-card-wrap .wishlist-remove-btn {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 5;
+    color: #000;
+  }
+
+  .wishlist-card-wrap:hover .wishlist-remove-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .wishlist-remove-btn svg {
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+
+  /* Card exit animation */
+  .wishlist-card-wrap.is-removing {
+    animation: wishlistCardOut 0.35s ease forwards;
+  }
+
+  @keyframes wishlistCardOut {
+    to { opacity: 0; transform: scale(0.85); }
+  }
+
+  /* Card enter animation */
+  .wishlist-card-wrap {
+    animation: wishlistCardIn 0.35s ease;
+  }
+
+  @keyframes wishlistCardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width wishlist-page">
+
+    <h1 class="wishlist-page__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h1>
+    <p class="wishlist-page__count" id="wl-count-text"></p>
+
+    <!-- Loading spinner placeholder -->
+    <div id="wl-loader" style="text-align:center; padding: 4rem;">
+       <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="wishlist-empty" id="wl-empty">
+      <div class="wishlist-empty__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <h2 class="wishlist-empty__title">Your wishlist is empty</h2>
+      <p class="wishlist-empty__subtitle">Save your favourite products here to revisit them later.</p>
+      <a href="{{ routes.root_url }}" class="wishlist-empty__cta button button--primary">Continue Shopping</a>
+    </div>
+
+    <!-- Product grid -->
+    <div class="wishlist-grid" id="wl-grid"></div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var imageRatio       = '{{ section.settings.image_ratio }}';
+  var showSecondImage  = {{ section.settings.show_secondary_image | json }};
+  var productsToShow   = 50; 
+
+  function moneyFmt(cents) {
+    return (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  }
+
+  function buildCard(p) {
+    var url   = '/products/' + p.handle;
+    var title = p.title || '';
+
+    var ratioPct = imageRatio === 'portrait' ? '125%' : '100%';
+
+    var img1 = p.featured_image
+      ? p.featured_image.replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3')
+      : '';
+    var img2 = (showSecondImage && p.images && p.images.length > 1)
+      ? p.images[1].replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3')
+      : '';
+
+    var price    = p.price;
+    var cmpPrice = p.compare_at_price && p.compare_at_price > price ? p.compare_at_price : null;
+
+    var badgeHtml = '';
+    if (!p.available) {
+      badgeHtml = '<span class="badge badge--bottom-left color-inverse-2">Sold out</span>';
+    } else if (cmpPrice) {
+      badgeHtml = '<span class="badge badge--bottom-left color-accent-2">Sale</span>';
+    }
+
+    var priceHtml =
+      '<div class="price"><div class="price__container">' +
+        '<span class="price-item price-item--regular">₹' + moneyFmt(price) + '</span>' +
+        (cmpPrice ? '<s class="price-item price-item--regular" style="opacity:0.5;font-weight:400;margin-left:0.5rem;">₹' + moneyFmt(cmpPrice) + '</s>' : '') +
+      '</div></div>';
+
+    var img1Html = img1
+      ? '<img src="' + img1 + '" alt="' + title.replace(/"/g,'&quot;') + '" class="motion-reduce" loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">'
+      : '';
+    var img2Html = img2
+      ? '<img src="' + img2 + '" alt="" loading="lazy" class="wl-img2" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.4s ease;">'
+      : '';
+
+    var removeBtn =
+      '<button class="wishlist-remove-btn" data-remove="' + p.handle + '" aria-label="Remove from wishlist">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      '</button>';
+
+    return '<div class="wishlist-card-wrap" data-handle="' + p.handle + '">' +
+      removeBtn +
+      '<div class="card-wrapper product-card-wrapper underline-links-hover">' +
+        '<div class="card card--{{ settings.card_style }} card--media">' +
+          '<div class="card__inner {% if settings.card_style == "standard" %}color-{{ settings.card_color_scheme }} gradient{% endif %} ratio" style="--ratio-percent:' + ratioPct + ';">' +
+            '<div class="card__media">' +
+              '<div class="media media--transparent media--hover-effect wl-img-wrap">' +
+                img1Html + img2Html +
+              '</div>' +
+            '</div>' +
+            '<div class="card__content"><div class="card__badge {{ settings.badge_position }}">' + badgeHtml + '</div></div>' +
+          '</div>' +
+          '<div class="card__content">' +
+            '<div class="card__information">' +
+              '<h3 class="card__heading h5"><a href="' + url + '" class="full-unstyled-link">' + title + '</a></h3>' +
+              '<div class="card-information">' + priceHtml + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function updateCountText(n) {
+    var el = document.getElementById('wl-count-text');
+    if (!el) return;
+    el.textContent = n === 0 ? '' : (n === 1 ? '1 item saved' : n + ' items saved');
+  }
+
+  function renderGrid() {
+    var grid   = document.getElementById('wl-grid');
+    var empty  = document.getElementById('wl-empty');
+    var loader = document.getElementById('wl-loader');
+    
+    if (!grid || !empty) return;
+    if (!window.VVWishlist) {
+       console.error('VVWishlist manager not found. Retrying...');
+       setTimeout(renderGrid, 100);
+       return;
+    }
+
+    var handles = window.VVWishlist.getAll();
+    updateCountText(handles.length);
+
+    if (handles.length === 0) {
+      grid.innerHTML = '';
+      empty.classList.add('is-visible');
+      if (loader) loader.style.display = 'none';
+      return;
+    }
+    empty.classList.remove('is-visible');
+    if (loader) loader.style.display = 'block';
+
+    var promises = handles.slice(0, productsToShow).map(function (h) {
+      return fetch('/products/' + h + '.js')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    });
+
+    Promise.all(promises).then(function (products) {
+      var valid = products.filter(Boolean);
+      if (loader) loader.style.display = 'none';
+      
+      if (valid.length === 0) {
+        empty.classList.add('is-visible');
+        return;
+      }
+
+      grid.innerHTML = valid.map(buildCard).join('');
+      updateCountText(valid.length);
+
+      /* Image hover */
+      grid.querySelectorAll('.wl-img-wrap').forEach(function (wrap) {
+        var img2 = wrap.querySelector('.wl-img2');
+        if (!img2) return;
+        wrap.addEventListener('mouseenter', function () { img2.style.opacity = '1'; });
+        wrap.addEventListener('mouseleave', function () { img2.style.opacity = '0'; });
+      });
+
+      /* Remove buttons */
+      grid.querySelectorAll('[data-remove]').forEach(function (btn) {
+        btn.onclick = function (e) {
+          e.preventDefault();
+          var handle = this.getAttribute('data-remove');
+          var card   = this.closest('.wishlist-card-wrap');
+          if (card) {
+            card.classList.add('is-removing');
+            card.addEventListener('animationend', function () {
+              window.VVWishlist.remove(handle);
+            }, { once: true });
+          }
+        };
+      });
+    });
+  }
+
+  var initialized = false;
+  function safeInit() {
+    if (initialized) return;
+    initialized = true;
+    renderGrid();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', safeInit);
+  } else {
+    safeInit();
+  }
+
+  /* Listen for changes */
+  document.addEventListener('vv:wishlist:changed', renderGrid);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "My Wishlist",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt",    "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait"        },
+        { "value": "square",   "label": "Square"          }
+      ],
+      "default": "portrait",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist Page"
+    }
+  ]
+}
+{% endschema %}

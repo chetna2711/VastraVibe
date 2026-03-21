@@ -593,3 +593,78 @@
     clip-path: polygon(var(--shape--blob-5));
   }
 }
+/* VastraVibe Card Enhancements */
+.card__title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.card__title-row .card__heading {
+  margin: 0;
+  flex: 1;
+  font-size: 1.4rem;
+}
+
+/* Remove heading underline on hover */
+.card__heading a:hover {
+  text-decoration: none !important;
+}
+
+.card__wishlist-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.card__wishlist-btn:hover {
+  border-color: rgba(var(--color-foreground), 0.3);
+  transform: scale(1.1);
+}
+
+.card__wishlist-btn .card__wishlist-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.card__wishlist-btn .card__wishlist-icon--filled {
+  display: none;
+}
+
+.card__wishlist-btn.is-active {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.card__wishlist-btn.is-active .card__wishlist-icon--outline {
+  display: none;
+}
+
+.card__wishlist-btn.is-active .card__wishlist-icon--filled {
+  display: block;
+}
+
+/* Quick add button hover: Black background, White text */
+.quick-add__submit:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+  box-shadow: none !important;
+}
+
+.quick-add__submit:hover span {
+  color: #fff !important;
+}
