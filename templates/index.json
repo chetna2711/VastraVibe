@@ -561,7 +561,7 @@
         "icon_size": 50,
         "heading_size": "h2",
         "columns_desktop": 4,
-        "enable_slider_desktop": false,
+        "enable_slider_desktop": true,
         "show_arrows": true,
         "show_dots": false,
         "enable_loop": true,
