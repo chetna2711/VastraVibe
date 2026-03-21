@@ -262,7 +262,7 @@
         "title_position": "overlay",
         "title_alignment": "center",
         "image_aspect_ratio": "circle",
-        "circle_size_desktop": 100,
+        "circle_size_desktop": 90,
         "circle_size_mobile": 100,
         "grid_cols_desktop": 4,
         "grid_cols_mobile": 2,
