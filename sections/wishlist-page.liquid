@@ -28,7 +28,6 @@
     color: rgba(var(--color-foreground), 0.6);
     font-size: 1.4rem;
     margin-bottom: 4rem;
-    min-height: 1.6rem;
   }
 
   /* ── Empty state ── */
@@ -188,12 +187,12 @@
 
     var ratioPct = imageRatio === 'portrait' ? '125%' : '100%';
 
-    var img1 = p.featured_image
-      ? p.featured_image.replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3')
-      : '';
-    var img2 = (showSecondImage && p.images && p.images.length > 1)
-      ? p.images[1].replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3')
-      : '';
+    /* Get best available images with fallbacks */
+    var rawImg1 = p.featured_image || (p.images && p.images[0]) || '';
+    var rawImg2 = (showSecondImage && p.images && p.images.length > 1) ? p.images[1] : '';
+
+    var img1 = rawImg1 ? rawImg1.replace(/(\.(jpg|jpeg|png|gif|webp))/g, '_600x$1') : '';
+    var img2 = rawImg2 ? rawImg2.replace(/(\.(jpg|jpeg|png|gif|webp))/g, '_600x$1') : '';
 
     var price    = p.price;
     var cmpPrice = p.compare_at_price && p.compare_at_price > price ? p.compare_at_price : null;

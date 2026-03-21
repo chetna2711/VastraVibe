@@ -672,6 +672,12 @@
           maximumFractionDigits: 0
         });
 
+        // Thumbnails grid
+        const otherImages = product.media.filter(m => m.media_type === 'image').slice(1, 4);
+        const thumbnailsHtml = otherImages.map(m => `
+          <img src="${m.src}" style="width: calc(33.33% - 7px); aspect-ratio: 3/4; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,0,0,0.05);">
+        `).join('');
+
         const activeClass = window.VVWishlist && window.VVWishlist.has(product.handle) ? 'is-active' : '';
 
         infoWrapper.innerHTML = `

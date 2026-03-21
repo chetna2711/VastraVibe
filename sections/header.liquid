@@ -543,6 +543,24 @@
   </script>
 {%- endif -%}
 
+<script>
+  (function() {
+    function initMenuHover() {
+      if (window.innerWidth < 990) return;
+      document.querySelectorAll('.header__inline-menu details').forEach(item => {
+        item.addEventListener('mouseenter', () => { item.setAttribute('open', ''); });
+        item.addEventListener('mouseleave', () => { item.removeAttribute('open'); });
+      });
+    }
+    window.addEventListener('load', initMenuHover);
+    window.addEventListener('resize', initMenuHover);
+    document.addEventListener('shopify:section:load', (e) => { 
+      if (e.target.classList.contains('section-header')) initMenuHover();
+    });
+    setTimeout(initMenuHover, 100);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "t:sections.header.name",
@@ -777,3 +795,22 @@
   ]
 }
 {% endschema %}
+
+<script>
+  (function() {
+    function initMenuHover() {
+      if (window.innerWidth < 990) return;
+      document.querySelectorAll('.header__inline-menu details').forEach(item => {
+        item.addEventListener('mouseenter', () => { item.setAttribute('open', ''); });
+        item.addEventListener('mouseleave', () => { item.removeAttribute('open'); });
+      });
+    }
+    window.addEventListener('load', initMenuHover);
+    window.addEventListener('resize', initMenuHover);
+    document.addEventListener('shopify:section:load', (e) => { 
+      if (e.target.classList.contains('section-header')) initMenuHover();
+    });
+    setTimeout(initMenuHover, 100);
+  })();
+</script>
+

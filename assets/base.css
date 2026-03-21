@@ -2559,8 +2559,12 @@ input[type='checkbox'] {
   padding: 0;
 }
 
-.header__icon--cart {
+.header__icon--cart,
+.header__icon--wishlist {
   position: relative;
+}
+
+.header__icon--cart {
   margin-right: -1.2rem;
 }
 
@@ -2798,24 +2802,23 @@ details[open] > .header__submenu {
 }
 
 .header__menu-item:hover {
-  color: rgb(var(--color-foreground));
+  color: #000;
 }
 
 .header__menu-item span {
-  transition: text-decoration var(--duration-short) ease;
+  transition: color var(--duration-short) ease;
 }
 
 .header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  text-decoration: none !important;
 }
 
 details[open] > .header__menu-item {
-  text-decoration: underline;
+  text-decoration: none !important;
 }
 
 details[open]:hover > .header__menu-item {
-  text-decoration-thickness: 0.2rem;
+  text-decoration: none !important;
 }
 
 details[open] > .header__menu-item .icon-caret {
@@ -2823,14 +2826,13 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 .header__active-menu-item {
-  transition: text-decoration-thickness var(--duration-short) ease;
-  color: rgb(var(--color-foreground));
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
+  transition: color var(--duration-short) ease;
+  color: #000;
+  text-decoration: none !important;
 }
 
 .header__menu-item:hover .header__active-menu-item {
-  text-decoration-thickness: 0.2rem;
+  text-decoration: none !important;
 }
 
 .header__submenu {

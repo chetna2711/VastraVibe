@@ -163,37 +163,48 @@
     if (container.swiper) container.swiper.destroy(true, true);
 
     const isDesktopSlider = {{ section.settings.enable_slider_desktop | json }};
-    const isMobileSlider = true; // Always enable on mobile as per request
+    const enableMarquee = {{ section.settings.enable_marquee | json }};
 
-    new Swiper(container, {
-      freeMode: true,
+    const swiperConfig = {
       slidesPerView: {{ section.settings.slides_mobile }},
       spaceBetween: 20,
-      loop: {{ section.settings.enable_loop | json }},
+      loop: enableMarquee ? true : {{ section.settings.enable_loop | json }},
       watchOverflow: true,
-      {% if section.settings.show_dots %}
-      pagination: {
-        el: '.swiper-pagination-{{ section.id }}',
-        clickable: true,
-      },
-      {% endif %}
-      {% if section.settings.show_arrows %}
-      navigation: {
-        nextEl: '.swiper-button-next-{{ section.id }}',
-        prevEl: '.swiper-button-prev-{{ section.id }}',
-      },
-      {% endif %}
       breakpoints: {
         750: {
           slidesPerView: Math.min({{ section.settings.columns_desktop }}, 2),
-          enabled: true
         },
         990: {
           slidesPerView: {{ section.settings.columns_desktop }},
-          enabled: isDesktopSlider
         }
       }
-    });
+    };
+
+    if (enableMarquee) {
+      swiperConfig.autoplay = {
+        delay: 0,
+        disableOnInteraction: false,
+      };
+      swiperConfig.speed = 4000;
+      swiperConfig.freeMode = true;
+      swiperConfig.loop = true;
+    } else {
+      swiperConfig.freeMode = {{ section.settings.enable_slider_desktop | json }};
+      {% if section.settings.show_dots %}
+      swiperConfig.pagination = {
+        el: '.swiper-pagination-{{ section.id }}',
+        clickable: true,
+      };
+      {% endif %}
+      {% if section.settings.show_arrows %}
+      swiperConfig.navigation = {
+        nextEl: '.swiper-button-next-{{ section.id }}',
+        prevEl: '.swiper-button-prev-{{ section.id }}',
+      };
+      {% endif %}
+    }
+
+    new Swiper(container, swiperConfig);
   }
 
   document.addEventListener('DOMContentLoaded', initSwiper{{ section.id | replace: '-', '_' }});
@@ -276,8 +287,14 @@
       "min": 1,
       "max": 6,
       "step": 1,
-      "default": 3,
+      "default": 4,
       "label": "Columns on Desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "default": true,
+      "label": "Enable Marquee AutoPlay (Smooth Continuous)"
     },
     {
       "type": "checkbox",
