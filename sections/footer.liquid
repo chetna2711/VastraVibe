@@ -54,6 +54,8 @@
           {%- liquid
             if section.blocks.size == 9
               assign footer_grid_class = 'grid--3-col-tablet'
+            elsif section.blocks.size == 5
+              assign footer_grid_class = 'grid--5-col-desktop'
             elsif section.blocks.size > 6
               assign footer_grid_class = 'grid--4-col-desktop'
             elsif section.blocks.size > 4
@@ -158,6 +160,101 @@
                       {%- endif -%}
                       {%- if block.settings.subtext != blank -%}
                         <div class="rte">{{ block.settings.subtext }}</div>
+                      {%- endif -%}
+
+                      {%- if block.settings.address != blank or block.settings.phone != blank or block.settings.email_contact != blank -%}
+                        <div class="footer-block__contact-info" style="margin-top: 2rem;">
+                          {%- if block.settings.address != blank -%}
+                            <p class="footer-contact-item">
+                              <span class="svg-wrapper" style="width: 1.8rem; height: 1.8rem;">
+                                {%- if block.settings.icon_location != blank -%}
+                                  <img src="{{ block.settings.icon_location | image_url: width: 40 }}" alt="Address" width="20" height="20" loading="lazy">
+                                {%- else -%}
+                                  {{- 'icon-location.svg' | inline_asset_content -}}
+                                {%- endif -%}
+                              </span>
+                              {{ block.settings.address }}
+                            </p>
+                          {%- endif -%}
+                          {%- if block.settings.phone != blank -%}
+                            <p class="footer-contact-item">
+                              <span class="svg-wrapper" style="width: 1.8rem; height: 1.8rem;">
+                                {%- if block.settings.icon_phone != blank -%}
+                                  <img src="{{ block.settings.icon_phone | image_url: width: 40 }}" alt="Phone" width="20" height="20" loading="lazy">
+                                {%- else -%}
+                                  {{- 'icon-phone.svg' | inline_asset_content -}}
+                                {%- endif -%}
+                              </span>
+                              <a href="tel:{{ block.settings.phone }}" class="link link--text">{{ block.settings.phone }}</a>
+                            </p>
+                          {%- endif -%}
+                          {%- if block.settings.email_contact != blank -%}
+                            <p class="footer-contact-item">
+                              <span class="svg-wrapper" style="width: 1.8rem; height: 1.8rem;">
+                                {%- if block.settings.icon_email != blank -%}
+                                  <img src="{{ block.settings.icon_email | image_url: width: 40 }}" alt="Email" width="20" height="20" loading="lazy">
+                                {%- else -%}
+                                  {{- 'icon-mail.svg' | inline_asset_content -}}
+                                {%- endif -%}
+                              </span>
+                              <a href="mailto:{{ block.settings.email_contact }}" class="link link--text">{{ block.settings.email_contact }}</a>
+                            </p>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  {%- when 'contact_newsletter' -%}
+                    <div class="footer-block__details-content footer-block-contact">
+                      {%- if block.settings.heading != blank -%}
+                        <h2 class="footer-block__heading inline-richtext">{{ block.settings.heading }}</h2>
+                      {%- endif -%}
+                      
+                      {%- if block.settings.subtext != blank -%}
+                        <div class="rte" style="margin-bottom: 2rem; opacity: 0.8;">
+                          {{ block.settings.subtext }}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if block.settings.show_newsletter -%}
+                        <div class="footer-block__newsletter" style="margin-top: 1rem; margin-bottom: 3rem;">
+                          {%- form 'customer', id: block.id, class: 'footer__newsletter newsletter-form' -%}
+                            <input type="hidden" name="contact[tags]" value="newsletter">
+                            <div class="newsletter-form__field-wrapper">
+                              <div class="field" style="border: 1px solid rgba(var(--color-foreground), 0.2); border-radius: 5rem; padding: 0.5rem 1.5rem;">
+                                <input
+                                  id="NewsletterForm--{{ section.id }}-{{ block.id }}"
+                                  type="email"
+                                  name="contact[email]"
+                                  class="field__input"
+                                  style="border: none !important; box-shadow: none !important;"
+                                  value="{{ form.email }}"
+                                  aria-required="true"
+                                  autocorrect="off"
+                                  autocapitalize="off"
+                                  autocomplete="email"
+                                  placeholder="{{ 'newsletter.label' | t }}"
+                                  required
+                                >
+                                <button type="submit" class="newsletter-form__button field__button" name="commit" id="Subscribe-{{ block.id }}" style="right: 1.5rem;">
+                                  <span class="svg-wrapper" style="width: 2.4rem; height: 2.4rem;">
+                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                            {%- if form.posted_successfully? -%}
+                              <h3 class="newsletter-form__message newsletter-form__message--success form__message" id="ContactFooterBlock-success" tabindex="-1" autofocus>
+                                {{- 'newsletter.success' | t }}
+                              </h3>
+                            {%- endif -%}
+                          {%- endform -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if block.settings.show_social and has_social_icons -%}
+                         <div class="footer__list-social--circle">
+                           {%- render 'social-icons', class: 'footer__list-social' -%}
+                         </div>
                       {%- endif -%}
                     </div>
                 {%- endcase -%}
@@ -436,6 +533,79 @@
             }
           ],
           "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Contact Info"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Address",
+          "default": "Street Address 2571 Oakridge"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_location",
+          "label": "Location Icon (Custom Image)"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone Number",
+          "default": "+1 (973) 435-3638"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_phone",
+          "label": "Phone Icon (Custom Image)"
+        },
+        {
+          "type": "text",
+          "id": "email_contact",
+          "label": "Email Address",
+          "default": "info@fashionwomen.com"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_email",
+          "label": "Email Icon (Custom Image)"
+        }
+      ]
+    },
+    {
+      "type": "contact_newsletter",
+      "name": "Contact & Newsletter",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Get in touch",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "default": "<p>Sign up for our newsletter and stay updated.</p>",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email Address",
+          "default": "hello@vastravibe.com"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "default": true,
+          "label": "Show newsletter field"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social",
+          "default": true,
+          "label": "Show social media icons"
         }
       ]
     }

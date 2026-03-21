@@ -1,0 +1,379 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .service-icons-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .service-icons-{{ section.id }} .service-block {
+    text-align: {{ section.settings.content_alignment }};
+    display: flex;
+    flex-direction: column;
+    align-items: {% if section.settings.content_alignment == 'center' %}center{% elsif section.settings.content_alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
+    padding: 2rem;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+
+  .service-icons-{{ section.id }} .service-block:hover {
+    transform: translateY(-5px);
+  }
+
+  .service-icons-{{ section.id }} .service-block__icon {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+  }
+
+  .service-icons-{{ section.id }} .service-block__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .service-icons-{{ section.id }} .service-block__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .service-icons-{{ section.id }} .service-block__heading {
+    margin: 0 0 1rem;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .service-icons-{{ section.id }} .service-block__subheading {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: inherit;
+  }
+
+  /* Swiper Custom Styles */
+  .service-icons-{{ section.id }} .swiper-button-next,
+  .service-icons-{{ section.id }} .swiper-button-prev {
+    color: {{ section.settings.text_color }};
+    width: 30px;
+    height: 30px;
+  }
+
+  .service-icons-{{ section.id }} .swiper-button-next::after,
+  .service-icons-{{ section.id }} .swiper-button-prev::after {
+    font-size: 20px;
+  }
+
+  .service-icons-{{ section.id }} .swiper-pagination-bullet {
+    background: {{ section.settings.text_color }};
+    opacity: 0.3;
+  }
+
+  .service-icons-{{ section.id }} .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+
+  /* Desktop Grid vs Slider logic */
+  {% unless section.settings.enable_slider_desktop %}
+    @media screen and (min-width: 990px) {
+      .service-icons-{{ section.id }} .swiper-wrapper {
+        display: grid;
+        grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+        gap: 20px;
+        transform: none !important;
+      }
+      .service-icons-{{ section.id }} .swiper-slide {
+        height: auto;
+      }
+      .service-icons-{{ section.id }} .swiper-pagination,
+      .service-icons-{{ section.id }} .swiper-button-next,
+      .service-icons-{{ section.id }} .swiper-button-prev {
+        display: none !important;
+      }
+    }
+  {% endunless %}
+{%- endstyle -%}
+
+<div class="service-icons-{{ section.id }} section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="swiper swiper-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <div class="service-block">
+              <div class="service-block__icon" style="width: {{ section.settings.icon_size }}px; height: {{ section.settings.icon_size }}px;">
+                {%- if block.settings.icon_image != blank -%}
+                  <img
+                    src="{{ block.settings.icon_image | image_url: width: 200 }}"
+                    alt="{{ block.settings.heading | escape }}"
+                    loading="lazy"
+                    width="{{ section.settings.icon_size }}"
+                    height="{{ section.settings.icon_size }}"
+                  >
+                {%- else -%}
+                   {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="service-block__heading {{ section.settings.heading_size }}">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <div class="service-block__subheading rte">{{ block.settings.subheading }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_arrows -%}
+        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
+        <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
+      {%- endif -%}
+      
+      {%- if section.settings.show_dots -%}
+        <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  function initSwiper{{ section.id | replace: '-', '_' }}() {
+    const container = document.querySelector('.swiper-{{ section.id }}');
+    if (!container) return;
+
+    // Check if slider is already initialized
+    if (container.swiper) container.swiper.destroy(true, true);
+
+    const isDesktopSlider = {{ section.settings.enable_slider_desktop | json }};
+    const isMobileSlider = true; // Always enable on mobile as per request
+
+    new Swiper(container, {
+      slidesPerView: {{ section.settings.slides_mobile }},
+      spaceBetween: 20,
+      loop: {{ section.settings.enable_loop | json }},
+      watchOverflow: true,
+      {% if section.settings.show_dots %}
+      pagination: {
+        el: '.swiper-pagination-{{ section.id }}',
+        clickable: true,
+      },
+      {% endif %}
+      {% if section.settings.show_arrows %}
+      navigation: {
+        nextEl: '.swiper-button-next-{{ section.id }}',
+        prevEl: '.swiper-button-prev-{{ section.id }}',
+      },
+      {% endif %}
+      breakpoints: {
+        750: {
+          slidesPerView: Math.min({{ section.settings.columns_desktop }}, 2),
+          enabled: true
+        },
+        990: {
+          slidesPerView: {{ section.settings.columns_desktop }},
+          enabled: isDesktopSlider
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initSwiper{{ section.id | replace: '-', '_' }});
+  
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initSwiper{{ section.id | replace: '-', '_' }}();
+      }
+    });
+  }
+
+  // Backup init for quick preview
+  setTimeout(initSwiper{{ section.id | replace: '-', '_' }}, 100);
+</script>
+
+{% schema %}
+{
+  "name": "Service Icons & Text",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Custom Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Custom Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Icon Size",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h3", "label": "Small" },
+        { "value": "h2", "label": "Medium" },
+        { "value": "h1", "label": "Large" }
+      ],
+      "default": "h2",
+      "label": "Heading Size"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on Desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_desktop",
+      "default": false,
+      "label": "Enable Slider on Desktop"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings (Mobile/Tablet)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "default": true,
+      "label": "Show Arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "default": true,
+      "label": "Show Navigation Dots"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "default": true,
+      "label": "Enable Continuous Loop"
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.2,
+      "label": "Slides per view (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service_block",
+      "name": "Service Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Service Heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "default": "<p>High-quality description of your service or value proposition.</p>",
+          "label": "Subheading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service Icons & Text",
+      "blocks": [
+        { "type": "service_block", "settings": { "heading": "Free Shipping" } },
+        { "type": "service_block", "settings": { "heading": "Free Returns" } },
+        { "type": "service_block", "settings": { "heading": "Support Online" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,390 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    background-color: {{ section.settings.bg_color }};
+    overflow: hidden;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-slide {
+  width: 280px; /* 🔥 REQUIRED */
+}
+  
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .shop-the-look-{{ section.id }} .title-wrapper {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 80px;
+    perspective: 1200px;
+    overflow: visible;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-slide {
+    height: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    background: transparent;
+    transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0.5;
+    filter: blur(1.5px); /* Blur effect on side slides */
+    transform-style: preserve-3d;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-slide-active {
+    opacity: 1;
+    filter: blur(0); /* Remove blur for active card */
+    z-index: 5;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  }
+
+  .shop-the-look-{{ section.id }} .look-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .shop-the-look-{{ section.id }} .look-card__image-wrapper {
+    aspect-ratio: 4 / 5.5;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shop-the-look-{{ section.id }} .look-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-slide-active:hover .look-card__image {
+    transform: scale(1.05); /* Slight zoom-in on hover */
+  }
+
+  .shop-the-look-{{ section.id }} .look-card__info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 3rem 2rem 2.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    color: white;
+    text-align: center;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 10;
+  }
+
+  /* Show overlay ONLY on hover of the active slide */
+  .shop-the-look-{{ section.id }} .swiper-slide-active:hover .look-card__info {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Fallback for Mobile (always show info on active slide if touch device) */
+  @media (hover: none) {
+    .shop-the-look-{{ section.id }} .swiper-slide-active .look-card__info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .shop-the-look-{{ section.id }} .look-card__title {
+    margin: 0 0 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .shop-the-look-{{ section.id }} .look-card__button {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 1.2rem 3rem;
+    width: auto;
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    text-decoration: none;
+    border-radius: 4rem;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .shop-the-look-{{ section.id }} .look-card__button:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  /* Navigation Arrows */
+  .shop-the-look-{{ section.id }} .swiper-button-prev,
+  .shop-the-look-{{ section.id }} .swiper-button-next {
+    background: rgba(255,255,255,0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #000;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 100 !important;
+    display: flex !important;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-button-prev:hover,
+  .shop-the-look-{{ section.id }} .swiper-button-next:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-button-next::after,
+  .shop-the-look-{{ section.id }} .swiper-button-prev::after {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+
+  .shop-the-look-{{ section.id }} .swiper-button-prev { left: 15px; }
+  .shop-the-look-{{ section.id }} .swiper-button-next { right: 15px; }
+
+  @media screen and (min-width: 1200px) {
+    .shop-the-look-{{ section.id }} .swiper-button-prev { left: 40px; }
+    .shop-the-look-{{ section.id }} .swiper-button-next { right: 40px; }
+  }
+
+
+  .shop-the-look-{{ section.id }} .swiper-slide {
+  z-index: 1;
+}
+
+.shop-the-look-{{ section.id }} .swiper-slide-active {
+  z-index: 10;
+}
+
+.shop-the-look-{{ section.id }} .swiper-slide-prev,
+.shop-the-look-{{ section.id }} .swiper-slide-next {
+  z-index: 5;
+}
+{%- endstyle -%}
+
+<div class="shop-the-look-{{ section.id }} section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="title-wrapper center">
+        <h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="shop-the-look__container">
+      <div class="swiper swiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- assign collection = section.settings.collection -%}
+          {%- if collection != blank and collection.products_count > 0 -%}
+            {%- for product in collection.products limit: section.settings.products_to_show -%}
+              <div class="swiper-slide">
+                <div class="look-card">
+                  <div class="look-card__image-wrapper">
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 600 }}" 
+                      alt="{{ product.title | escape }}"
+                      class="look-card__image"
+                      loading="lazy"
+                    >
+                  </div>
+                  <div class="look-card__info">
+                    <h3 class="look-card__title">{{ product.title }}</h3>
+                    <a href="{{ product.url }}" class="look-card__button">View</a>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+             {%- for i in (1..5) -%}
+                <div class="swiper-slide">
+                  <div class="look-card">
+                    <div class="look-card__image-wrapper">
+                      {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                    <div class="look-card__info">
+                      <h3 class="look-card__title">Sample Product {{ i }}</h3>
+                      <button class="look-card__button">View</button>
+                    </div>
+                  </div>
+                </div>
+             {%- endfor -%}
+          {%- endif -%}
+        </div>
+        
+        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}"></div>
+        <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initShopTheLookSwiper{{ section.id | replace: '-', '_' }}() {
+    const selector = '.swiper-{{ section.id }}';
+    const container = document.querySelector(selector);
+    if (!container) return;
+
+    if (container.swiper) container.swiper.destroy(true, true);
+
+  const swiper = new Swiper(selector, {
+    loop: true,
+    loopedSlides: 5, /* 🔥 CRITICAL: Clones enough slides to prevent empty space on right side */
+    speed: 600,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+
+    effect: 'coverflow',
+    grabCursor: true,
+    watchSlidesProgress: true,
+
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 30, /* Pulls slides slightly closer together */
+      depth: 150, /* Creates the 3D stacked depth */
+      modifier: 1,
+      slideShadows: false,
+    },
+
+    {% if section.settings.enable_autoplay %}
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
+    },
+    {% endif %}
+
+    navigation: {
+      nextEl: '.swiper-button-next-{{ section.id }}',
+      prevEl: '.swiper-button-prev-{{ section.id }}',
+    }
+  });
+
+    window.addEventListener('resize', () => {
+      swiper.update();
+    });
+  }
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    initShopTheLookSwiper{{ section.id | replace: '-', '_' }}
+  );
+
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        initShopTheLookSwiper{{ section.id | replace: '-', '_' }}();
+      }
+    });
+  }
+
+  initShopTheLookSwiper{{ section.id | replace: '-', '_' }}();
+</script>
+
+{% schema %}
+{
+  "name": "Shop The Look",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Shop The Look",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6,
+      "label": "Products to show"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "default": "#f4f4f4",
+      "label": "Background Color"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "default": true,
+      "label": "Enable Auto-scroll"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36,
+      "label": "Padding Bottom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop The Look"
+    }
+  ]
+}
+{% endschema %}
