@@ -55,17 +55,17 @@
           "settings": {
             "image_mobile": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_00_44_PM.png",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
+            "heading": "",
             "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
+            "subheading": "",
+            "button_label": "",
             "link": "",
             "button_style_secondary": false,
             "show_text_box": true,
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
           }
         }
       },
