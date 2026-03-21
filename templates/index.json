@@ -307,6 +307,68 @@
         "padding_bottom": 0
       }
     },
+    "instagram_feed_gRhx83": {
+      "type": "instagram-feed",
+      "blocks": {
+        "post_QPEYUx": {
+          "type": "post",
+          "settings": {
+            "post_url": ""
+          }
+        },
+        "post_CJzrg8": {
+          "type": "post",
+          "settings": {
+            "post_url": ""
+          }
+        },
+        "post_YXyz96": {
+          "type": "post",
+          "settings": {
+            "post_url": ""
+          }
+        },
+        "post_btBy7A": {
+          "type": "post",
+          "settings": {
+            "post_url": ""
+          }
+        },
+        "post_zmfgap": {
+          "type": "post",
+          "settings": {
+            "post_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_QPEYUx",
+        "post_CJzrg8",
+        "post_YXyz96",
+        "post_btBy7A",
+        "post_zmfgap"
+      ],
+      "name": "Instagram Feed",
+      "settings": {
+        "heading": "@VastraVibe",
+        "description": "Inspire and let yourself be inspired, from one unique fashion to another.",
+        "follow_label": "Follow Us",
+        "follow_url": "",
+        "bg_color": "#ffffff",
+        "desktop_slides": 5,
+        "tablet_slides": 3,
+        "mobile_slides": 1.2,
+        "enable_marquee": false,
+        "show_arrows": true,
+        "enable_autoplay": true,
+        "show_pagination": true,
+        "autoplay_speed": 5,
+        "pause_on_hover": true,
+        "enable_loop": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
     "customer_reviews_XbUGwB": {
       "type": "customer-reviews",
       "blocks": {
@@ -435,6 +497,7 @@
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
     "collage_AM7HwV",
+    "instagram_feed_gRhx83",
     "customer_reviews_XbUGwB"
   ]
 }
