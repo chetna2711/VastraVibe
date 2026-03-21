@@ -688,7 +688,7 @@
         "enable_loop": true,
         "slides_mobile": 1,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 20
       }
     }
   },
