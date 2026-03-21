@@ -386,8 +386,8 @@
         "autoplay_speed": 5,
         "pause_on_hover": true,
         "enable_loop": true,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "customer_reviews_XbUGwB": {
