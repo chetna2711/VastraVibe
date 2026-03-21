@@ -278,11 +278,11 @@
       "type": "featured-collection-slider",
       "name": "Featured Collection Slider",
       "settings": {
-        "collection": "saree",
+        "collection": "best-selling",
         "products_to_show": 8,
         "title": "",
         "heading_size": "h1",
-        "heading_alignment": "center",
+        "heading_alignment": "left",
         "show_video": false,
         "show_pagination": true,
         "show_arrows": true,
