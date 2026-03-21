@@ -555,9 +555,9 @@
       "name": "Service Icons & Text",
       "settings": {
         "color_scheme": "",
-        "background_color": "transparent",
+        "background_color": "rgba(0,0,0,0)",
         "text_color": "#000000",
-        "content_alignment": "center",
+        "content_alignment": "left",
         "icon_size": 50,
         "heading_size": "h2",
         "columns_desktop": 4,
