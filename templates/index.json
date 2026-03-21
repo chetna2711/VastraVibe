@@ -558,14 +558,14 @@
         "heading_size": "h1",
         "description": "<p>Read what our customers have to say about their experience with us.</p>",
         "section_bg_color": "#ffffff",
-        "show_arrows": true,
+        "show_arrows": false,
         "show_pagination": false,
         "enable_loop": true,
         "enable_autoplay": true,
         "autoplay_delay": 5,
         "slides_desktop": 4,
         "slides_tablet": 2,
-        "slides_mobile": 1.1,
+        "slides_mobile": 1,
         "padding_top": 0,
         "padding_bottom": 0
       }
