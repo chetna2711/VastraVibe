@@ -58,10 +58,10 @@
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "adapt_image",
-        "slider_visual": "dots",
+        "slide_height": "medium",
+        "slider_visual": "counter",
         "auto_rotate": false,
-        "show_arrows": false,
+        "show_arrows": true,
         "change_slides_speed": 5,
         "image_behavior": "none",
         "show_text_below": true,
@@ -379,10 +379,10 @@
         "desktop_slides": 5,
         "tablet_slides": 3,
         "mobile_slides": 1.2,
-        "enable_marquee": false,
-        "show_arrows": true,
+        "enable_marquee": true,
+        "show_arrows": false,
         "enable_autoplay": true,
-        "show_pagination": true,
+        "show_pagination": false,
         "autoplay_speed": 5,
         "pause_on_hover": true,
         "enable_loop": true,
@@ -509,6 +509,66 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "custom_service_icons_RPEQHP": {
+      "type": "custom-service-icons",
+      "blocks": {
+        "service_block_VMdKWK": {
+          "type": "service_block",
+          "settings": {
+            "icon_image": "shopify://shop_images/free-shipping-icon.png",
+            "heading": "Free Shipping",
+            "subheading": "<p>High-quality description of your service or value proposition.</p>"
+          }
+        },
+        "service_block_bxHyfk": {
+          "type": "service_block",
+          "settings": {
+            "icon_image": "shopify://shop_images/1641509.png",
+            "heading": "Free Returns",
+            "subheading": "<p>High-quality description of your service or value proposition.</p>"
+          }
+        },
+        "service_block_UygPBa": {
+          "type": "service_block",
+          "settings": {
+            "icon_image": "shopify://shop_images/Support-PNG-Picture.png",
+            "heading": "Support Online",
+            "subheading": "<p>High-quality description of your service or value proposition.</p>"
+          }
+        },
+        "service_block_EhHwCR": {
+          "type": "service_block",
+          "settings": {
+            "icon_image": "shopify://shop_images/lock-2.webp",
+            "heading": "100% Secure Checkout",
+            "subheading": "<p>Enjoy a fully protected shopping experience with our 100% secure checkout,</p>"
+          }
+        }
+      },
+      "block_order": [
+        "service_block_VMdKWK",
+        "service_block_bxHyfk",
+        "service_block_UygPBa",
+        "service_block_EhHwCR"
+      ],
+      "name": "Service Icons & Text",
+      "settings": {
+        "color_scheme": "",
+        "background_color": "transparent",
+        "text_color": "#000000",
+        "content_alignment": "center",
+        "icon_size": 50,
+        "heading_size": "h2",
+        "columns_desktop": 4,
+        "enable_slider_desktop": false,
+        "show_arrows": true,
+        "show_dots": false,
+        "enable_loop": true,
+        "slides_mobile": 1,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
@@ -519,6 +579,7 @@
     "image_plus_video_WX4dca",
     "collage_AM7HwV",
     "instagram_feed_gRhx83",
-    "customer_reviews_XbUGwB"
+    "customer_reviews_XbUGwB",
+    "custom_service_icons_RPEQHP"
   ]
 }
