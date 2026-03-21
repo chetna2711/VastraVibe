@@ -268,7 +268,7 @@
         "grid_cols_mobile": 2,
         "grid_gap_desktop": 20,
         "grid_gap_mobile": 15,
-        "slider_slides_desktop": 6,
+        "slider_slides_desktop": 7,
         "slider_slides_tablet": 4,
         "slider_gap": 15,
         "slider_slides_mobile": "3"
