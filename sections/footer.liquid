@@ -52,10 +52,12 @@
       <div class="footer__content-top page-width">
         {%- if section.blocks.size > 0 -%}
           {%- liquid
-            if section.blocks.size == 9
+             if section.blocks.size == 9
               assign footer_grid_class = 'grid--3-col-tablet'
             elsif section.blocks.size == 5
               assign footer_grid_class = 'grid--5-col-desktop'
+            elsif section.blocks.size == 4
+              assign footer_grid_class = 'grid--4-col-desktop'
             elsif section.blocks.size > 6
               assign footer_grid_class = 'grid--4-col-desktop'
             elsif section.blocks.size > 4
@@ -154,10 +156,7 @@
                       {%- else -%}
                         {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
                       {%- endif -%}
-                      
-                      {%- if block.settings.heading != blank -%}
-                        <h2 class="footer-block__heading inline-richtext">{{ block.settings.heading }}</h2>
-                      {%- endif -%}
+
                       {%- if block.settings.subtext != blank -%}
                         <div class="rte">{{ block.settings.subtext }}</div>
                       {%- endif -%}
@@ -205,9 +204,7 @@
                     </div>
                   {%- when 'contact_newsletter' -%}
                     <div class="footer-block__details-content footer-block-contact">
-                      {%- if block.settings.heading != blank -%}
-                        <h2 class="footer-block__heading inline-richtext">{{ block.settings.heading }}</h2>
-                      {%- endif -%}
+
                       
                       {%- if block.settings.subtext != blank -%}
                         <div class="rte" style="margin-bottom: 2rem; opacity: 0.8;">
@@ -216,23 +213,22 @@
                       {%- endif -%}
 
                       {%- if block.settings.show_newsletter -%}
-                        <div class="footer-block__newsletter" style="margin-top: 1rem; margin-bottom: 3rem;">
+                        <div class="footer-block__newsletter" style="margin-top: 1rem; margin-bottom: 2rem;">
                           {%- form 'customer', id: block.id, class: 'footer__newsletter newsletter-form' -%}
                             <input type="hidden" name="contact[tags]" value="newsletter">
                             <div class="newsletter-form__field-wrapper">
-                              <div class="field" style="border: 1px solid rgba(var(--color-foreground), 0.2); border-radius: 5rem; padding: 0.5rem 1.5rem;">
+                              <div class="field newsletter-field--pill">
                                 <input
                                   id="NewsletterForm--{{ section.id }}-{{ block.id }}"
                                   type="email"
                                   name="contact[email]"
-                                  class="field__input"
-                                  style="border: none !important; box-shadow: none !important;"
+                                  class="field__input field__input--pill"
                                   value="{{ form.email }}"
                                   aria-required="true"
                                   autocorrect="off"
                                   autocapitalize="off"
                                   autocomplete="email"
-                                  placeholder="{{ 'newsletter.label' | t }}"
+                                  placeholder="Enter your email..."
                                   required
                                 >
                                 <button type="submit" class="newsletter-form__button field__button" name="commit" id="Subscribe-{{ block.id }}" style="right: 1.5rem;">
@@ -248,6 +244,12 @@
                               </h3>
                             {%- endif -%}
                           {%- endform -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if block.settings.disclaimer_text != blank -%}
+                        <div class="rte" style="margin-bottom: 3rem; font-size: 1.2rem; opacity: 0.9;">
+                          {{ block.settings.disclaimer_text }}
                         </div>
                       {%- endif -%}
 
@@ -588,6 +590,12 @@
           "id": "subtext",
           "default": "<p>Sign up for our newsletter and stay updated.</p>",
           "label": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "disclaimer_text",
+          "default": "<p>***By entering the e-mail you accept the terms and conditions and the privacy policy.</p>",
+          "label": "Disclaimer text"
         },
         {
           "type": "text",

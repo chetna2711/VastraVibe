@@ -171,9 +171,9 @@
   text-align: center;
 }
 
-.footer__list-social.list-social:only-child {
+/* .footer__list-social.list-social:only-child {
   justify-content: center;
-}
+} */
 
 .footer-block__newsletter {
   text-align: center;
@@ -550,6 +550,10 @@
   border-color: rgb(var(--color-foreground));
 }
 
+.footer__list-social--circle .list-social__item:hover .list-social__link {
+  color: rgb(var(--color-background));
+}
+
 .footer__list-social--circle .list-social__link {
   padding: 0;
   display: flex;
@@ -582,7 +586,7 @@
   }
 }
 
-/* Force 5 columns in one row for  style */
+/* Force 5 columns in one row for style */
 @media screen and (min-width: 990px) {
   .footer__blocks-wrapper.grid--5-col-desktop {
     display: grid;
@@ -590,14 +594,22 @@
     gap: 4rem;
   }
 
-  .footer-block.grid__item {
+  .footer__blocks-wrapper.grid--4-col-desktop {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .footer__blocks-wrapper.grid--5-col-desktop .footer-block.grid__item,
+  .footer__blocks-wrapper.grid--4-col-desktop .footer-block.grid__item {
     width: 100% !important;
     max-width: 100% !important;
   }
 }
 
 @media screen and (min-width: 750px) and (max-width: 989px) {
-  .footer__blocks-wrapper.grid--5-col-desktop {
+  .footer__blocks-wrapper.grid--5-col-desktop,
+  .footer__blocks-wrapper.grid--4-col-desktop {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
@@ -606,4 +618,40 @@
 
 .footer-contact-item {
   margin-top: 1.5rem;
+}
+
+/* Custom Pill Newsletter Input styling */
+.newsletter-field--pill {
+  border-radius: 5rem;
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  padding: 0.5rem 1.5rem;
+  overflow: hidden;
+  position: relative;
+  background-color: transparent;
+}
+
+.newsletter-field--pill::before,
+.newsletter-field--pill::after {
+  display: none !important;
+}
+
+.field__input.field__input--pill {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent;
+  padding-left: 0;
+  height: 4rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.field__input.field__input--pill::placeholder {
+  opacity: 1 !important;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.field__input.field__input--pill:focus,
+.field__input.field__input--pill:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
