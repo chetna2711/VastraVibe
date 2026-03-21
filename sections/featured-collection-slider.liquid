@@ -461,6 +461,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const swiperConfig = {
+      freeMode: true,
       slidesPerView: {{ section.settings.columns_mobile }},
       spaceBetween: 20,
       loop: false,
@@ -628,6 +629,7 @@
         setTimeout(() => {
           if (window.modalSwiper) window.modalSwiper.destroy();
           window.modalSwiper = new Swiper('#QuickView-' + sectionId + ' .swiper-modal', {
+            freeMode: true,
             loop: product.media.length > 1,
             pagination: { 
               el: '#QuickView-' + sectionId + ' .swiper-pagination',

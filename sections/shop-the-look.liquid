@@ -254,6 +254,7 @@
     if (container.swiper) container.swiper.destroy(true, true);
 
   const swiper = new Swiper(selector, {
+    freeMode: true,
     loop: true,
     loopedSlides: 5, /* 🔥 CRITICAL: Clones enough slides to prevent empty space on right side */
     speed: 600,

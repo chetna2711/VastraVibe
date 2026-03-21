@@ -242,7 +242,9 @@
       <div class="swiper-button-next swiper-button-next-{{ section.id }}"></div>
     {%- endif -%}
     
-    <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
+    {%- if section.settings.slider_visual != 'none' -%}
+      <div class="swiper-pagination swiper-pagination-{{ section.id }}"></div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -256,28 +258,29 @@
     }
 
     const visual = '{{ section.settings.slider_visual }}';
-    let paginationConfig = {
-      el: '.swiper-pagination-{{ section.id }}',
-      clickable: true
-    };
+    let paginationConfig = false;
 
-    if (visual === 'counter') {
-      paginationConfig.type = 'fraction';
-    } else if (visual === 'numbers') {
-      paginationConfig.renderBullet = function (index, className) {
-        return '<span class="' + className + '">' + (index + 1) + '</span>';
+    if (visual !== 'none') {
+      paginationConfig = {
+        el: '.swiper-pagination-{{ section.id }}',
+        clickable: true
       };
+
+      if (visual === 'counter') {
+        paginationConfig.type = 'fraction';
+      } else if (visual === 'numbers') {
+        paginationConfig.renderBullet = function (index, className) {
+          return '<span class="' + className + '">' + (index + 1) + '</span>';
+        };
+      }
     }
 
     const swiperSlideshow = new Swiper(swiperEl, {
       slidesPerView: 1,
       loop: true,
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
       observer: true,
       observeParents: true,
+      touchEventsTarget: 'container',
       {% if section.settings.auto_rotate %}
       autoplay: {
         delay: {{ section.settings.change_slides_speed | times: 1000 }},
@@ -360,6 +363,10 @@
       "type": "select",
       "id": "slider_visual",
       "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
         {
           "value": "dots",
           "label": "t:sections.slideshow.settings.slider_visual.options__2.label"

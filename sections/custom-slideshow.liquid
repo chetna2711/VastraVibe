@@ -324,12 +324,9 @@
     }
 
     const swiperSlideshow = new Swiper(swiperEl, {
+      freeMode: true,
       slidesPerView: 1,
       loop: true,
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
       observer: true,
       observeParents: true,
       {% if section.settings.auto_rotate %}
