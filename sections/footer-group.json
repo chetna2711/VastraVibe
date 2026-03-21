@@ -23,8 +23,11 @@
             "image_width": 150,
             "alignment": "",
             "address": "Street Address 2571 Oakridge",
+            "icon_location": "shopify://shop_images/address_1295181.png",
             "phone": "+1 (973) 435-3638",
-            "email_contact": "info@fashionwomen.com"
+            "icon_phone": "shopify://shop_images/phone-number-icon-9.png",
+            "email_contact": "info@fashionwomen.com",
+            "icon_email": "shopify://shop_images/931-9311379_email-icons-white-color-white-email-icon-png.jpg"
           }
         },
         "link_list_yLjLzw": {
@@ -53,6 +56,7 @@
           "settings": {
             "heading": "Get in touch",
             "subtext": "<p>Sign up for our newsletter and stay updated.</p>",
+            "disclaimer_text": "<p>***By entering the e-mail you accept the terms and conditions and the privacy policy.</p>",
             "email": "hello@vastravibe.com",
             "show_newsletter": true,
             "show_social": true
