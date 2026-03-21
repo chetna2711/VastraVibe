@@ -1330,3 +1330,27 @@ class CartPerformance {
     );
   }
 }
+window.vvShowToast = function(msg, type) {
+  var toast = document.createElement('div');
+  toast.className = 'vv-wishlist-toast vv-wishlist-toast--' + type;
+  
+  var icon = type === 'add' 
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+
+  toast.innerHTML = '<span class="vv-toast-icon">' + icon + '</span><span class="vv-toast-msg">' + msg + '</span>';
+  document.body.appendChild(toast);
+  
+  // Animate in
+  setTimeout(function() {
+    toast.classList.add('is-visible');
+  }, 10);
+  
+  // Animate out and remove
+  setTimeout(function() {
+    toast.classList.remove('is-visible');
+    setTimeout(function() {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 500);
+  }, 3000);
+};

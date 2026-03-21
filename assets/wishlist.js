@@ -49,8 +49,10 @@ window.VVWishlist = (function () {
     if (!handle) return;
     if (has(handle)) {
       remove(handle);
+      if (window.vvShowToast) window.vvShowToast('Removed from Wishlist!', 'remove');
     } else {
       add(handle);
+      if (window.vvShowToast) window.vvShowToast('Added to Wishlist!', 'add');
     }
     updateUI();
   }

@@ -29,19 +29,7 @@
   
   #RelatedProducts-{{ section.id }} .swiper-slide {
     height: auto;
-    width: 25%; /* Default for desktop */
-  }
-
-  @media screen and (max-width: 989px) {
-    #RelatedProducts-{{ section.id }} .swiper-slide {
-      width: 40%;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    #RelatedProducts-{{ section.id }} .swiper-slide {
-      width: 70%;
-    }
+    box-sizing: border-box;
   }
 {%- endstyle -%}
 
@@ -72,43 +60,46 @@
           {% endfor %}
         </div>
       </div>
-
-      <script>
-        (function() {
-          function initRelatedSlider() {
-            const container = document.querySelector('#RelatedProducts-{{ section.id }}');
-            if (!container || container.swiper) return;
-
-            new Swiper(container, {
-              slidesPerView: 'auto',
-              spaceBetween: 20,
-              freeMode: true,
-              watchOverflow: true,
-              mousewheel: {
-                forceToAxis: true,
-              },
-            });
-          }
-
-          // Related products load dynamically, so we observe mutations
-          const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              if (mutation.addedNodes.length) {
-                initRelatedSlider();
-              }
-            });
-          });
-
-          const target = document.querySelector('product-recommendations[data-section-id="{{ section.id }}"]');
-          if (target) {
-            observer.observe(target, { childList: true });
-            // Also try immediate in case it's already there
-            initRelatedSlider();
-          }
-        })();
-      </script>
     {% endif %}
   </product-recommendations>
+
+  <script>
+    (function() {
+      function initRelatedSlider() {
+        if (typeof Swiper === 'undefined') {
+          setTimeout(initRelatedSlider, 100);
+          return;
+        }
+        const container = document.querySelector('#RelatedProducts-{{ section.id }}');
+        if (!container || container.swiper) return;
+
+        new Swiper(container, {
+          slidesPerView: 1.2,
+          spaceBetween: 15,
+          freeMode: true,
+          watchOverflow: true,
+          breakpoints: {
+            750: { slidesPerView: 3, spaceBetween: 20 },
+            990: { slidesPerView: 4, spaceBetween: 20 }
+          },
+          mousewheel: {
+            forceToAxis: true,
+          },
+        });
+      }
+
+      // Initialize on load or mutation
+      window.addEventListener('load', initRelatedSlider);
+      const target = document.querySelector('product-recommendations[data-section-id="{{ section.id }}"]');
+      if (target) {
+        new MutationObserver((mutations) => {
+          if (target.innerHTML.trim().length > 0) initRelatedSlider();
+        }).observe(target, { childList: true });
+      }
+      // Immediate call
+      initRelatedSlider();
+    })();
+  </script>
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}

@@ -154,13 +154,13 @@
   .quick-view-modal__content {
     background: #fff;
     width: 100%;
-    max-width: 900px;
+    max-width: 800px;
     border-radius: 12px;
     position: relative;
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    max-height: 90vh;
+    max-height: 85vh;
   }
 
   @media screen and (max-width: 749px) {
@@ -194,10 +194,10 @@
 
   .quick-view-modal__info {
     width: 50%;
-    padding: 30px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     overflow-y: auto;
   }
 
@@ -743,19 +743,16 @@
     .then(data => {
       // Refresh Dawn's cart components
       if (document.querySelector('cart-drawer')) {
-          // Dawn 11+ uses publish/subscribe for cart updates
           if (window.publish) {
              publish(PUB_SUB_EVENTS.cartUpdate, {source: 'product-form'});
           }
-          // Fallback if not using pubsub
-          fetch('/?section_id=cart-drawer')
-            .then(res => res.text())
-            .then(html => {
-              const inner = new DOMParser().parseFromString(html, 'text/html').querySelector('#CartDrawer');
-              if (inner) document.querySelector('#CartDrawer').innerHTML = inner.innerHTML;
-              document.querySelector('cart-drawer').classList.add('active');
-            });
       }
+      
+      // Global Toast Notification
+      if (window.vvShowToast) {
+        window.vvShowToast('Added to Cart!', 'add');
+      }
+
       btn.innerHTML = 'Added!';
       setTimeout(() => {
         closeQuickView(sectionId);

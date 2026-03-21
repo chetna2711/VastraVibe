@@ -627,6 +627,8 @@
   transition: all 0.3s ease;
   padding: 0;
   flex-shrink: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .card__wishlist-btn:hover {

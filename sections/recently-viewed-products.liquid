@@ -138,11 +138,18 @@
     var ratioPct = '100%';
     if (imageRatio === 'portrait') ratioPct = '125%';
 
+    /* Helper to resize Shopify Images */
+    function getSizedImage(src, size) {
+      if (!src) return '';
+      // Remove existing size/parameters
+      var clean = src.split('?')[0].replace(/(_\d+x|_master|(_(small|medium|large|grande)))?\./g, '.');
+      // Add new size
+      return clean.replace(/\.([a-zA-Z0-9]+)$/, '_' + size + '.$1');
+    }
+
     /* Images */
-    var img1 = p.featured_image ? p.featured_image.replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3') : '';
-    var img2 = (showSecondImage && p.images && p.images.length > 1)
-               ? p.images[1].replace(/(\.(jpg|jpeg|png|gif|webp))(\?|$)/, '_600x$1$3')
-               : '';
+    var img1 = getSizedImage(p.featured_image, '600x');
+    var img2 = (showSecondImage && p.images && p.images.length > 1) ? getSizedImage(p.images[1], '600x') : '';
 
     /* Price */
     var price    = p.price;
@@ -189,10 +196,16 @@
           '</div>' +
           '<div class="card__content">' +
             '<div class="card__information">' +
-              '<h3 class="card__heading h5">' +
-                '<a href="' + url + '" class="full-unstyled-link">' + title + '</a>' +
-              '</h3>' +
-              '<div class="card-information">' +
+              '<div style="display: flex; justify-content: space-between; align-items: flex-start;">' +
+                '<h3 class="card__heading h5" style="margin: 0; flex: 1; padding-right: 10px;">' +
+                  '<a href="' + url + '" class="full-unstyled-link">' + title + '</a>' +
+                '</h3>' +
+                '<button class="card__wishlist-btn" data-wishlist-handle="' + p.handle + '" aria-label="Add to wishlist" type="button">' +
+                  '<svg class="card__wishlist-icon card__wishlist-icon--outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+                  '<svg class="card__wishlist-icon card__wishlist-icon--filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+                '</button>' +
+              '</div>' +
+              '<div class="card-information" style="margin-top: 1rem;">' +
                 priceBlock +
               '</div>' +
             '</div>' +
@@ -253,6 +266,11 @@
         {% endif %}
 
         new Swiper('#rv-swiper-' + sectionId, cfg);
+
+        // Update wishlist icons once rendered
+        if (window.VVWishlist) {
+          window.VVWishlist.updateUI();
+        }
       });
     } catch(e) {}
   }
