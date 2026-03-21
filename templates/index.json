@@ -341,6 +341,21 @@
         "post_zmfgap": {
           "type": "post",
           "settings": {
+            "image": "shopify://shop_images/i1.jpg",
+            "post_url": ""
+          }
+        },
+        "post_hHchgh": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/2_7eeba623-0ab2-4e06-a9d0-cbf7aba5023b.webp",
+            "post_url": ""
+          }
+        },
+        "post_NUjpkt": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/2_90fbcee1-a755-49c6-861e-c54a691a108c.webp",
             "post_url": ""
           }
         }
@@ -350,7 +365,9 @@
         "post_CJzrg8",
         "post_YXyz96",
         "post_btBy7A",
-        "post_zmfgap"
+        "post_zmfgap",
+        "post_hHchgh",
+        "post_NUjpkt"
       ],
       "name": "Instagram Feed",
       "settings": {
