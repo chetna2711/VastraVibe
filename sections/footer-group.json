@@ -21,7 +21,10 @@
             "heading": "",
             "subtext": "<p>At Vastravibe, we celebrate the timeless beauty of traditional women’s fashion with a modern touch. </p>",
             "image_width": 150,
-            "alignment": ""
+            "alignment": "",
+            "address": "Street Address 2571 Oakridge",
+            "phone": "+1 (973) 435-3638",
+            "email_contact": "info@fashionwomen.com"
           }
         },
         "link_list_yLjLzw": {
@@ -44,20 +47,31 @@
             "heading": "Legal",
             "menu": "legal"
           }
+        },
+        "contact_newsletter_E3pRt8": {
+          "type": "contact_newsletter",
+          "settings": {
+            "heading": "Get in touch",
+            "subtext": "<p>Sign up for our newsletter and stay updated.</p>",
+            "email": "hello@vastravibe.com",
+            "show_newsletter": true,
+            "show_social": true
+          }
         }
       },
       "block_order": [
         "image_giF8FB",
         "link_list_yLjLzw",
         "link_list_N8A8fH",
-        "link_list_7BkNdq"
+        "link_list_7BkNdq",
+        "contact_newsletter_E3pRt8"
       ],
       "settings": {
         "color_scheme": "scheme-4",
-        "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_enable": false,
+        "newsletter_heading": "",
         "enable_follow_on_shop": true,
-        "show_social": true,
+        "show_social": false,
         "enable_country_selector": true,
         "enable_language_selector": true,
         "payment_enable": true,
