@@ -254,7 +254,7 @@
         "heading_size": "h1",
         "heading_alignment": "left",
         "color_scheme": "",
-        "padding_top": 20,
+        "padding_top": 40,
         "padding_bottom": 0,
         "layout_desktop": "slider",
         "layout_mobile": "slider",
@@ -315,7 +315,7 @@
       "name": "Collection Tabs",
       "settings": {
         "heading": "Best Selling",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "heading_alignment": "center",
         "color_scheme": "",
         "bg_color": "transparent",
@@ -323,15 +323,15 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": true,
-        "enable_quick_add": false,
+        "enable_quick_add": true,
         "products_to_show": 12,
         "columns_desktop": 4,
         "columns_tablet": 3,
         "columns_mobile": 1.5,
-        "show_arrows": true,
+        "show_arrows": false,
         "show_pagination": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 20,
+        "padding_bottom": 0
       }
     },
     "featured_collection_slider_8dx9RL": {
@@ -353,7 +353,7 @@
         "view_all_position": "heading",
         "view_all_text": "View More",
         "color_scheme": "",
-        "padding_top": 36,
+        "padding_top": 0,
         "padding_bottom": 36
       }
     },
@@ -380,7 +380,7 @@
       "settings": {
         "heading": "",
         "heading_size": "h1",
-        "full_width": false,
+        "full_width": true,
         "block_spacing": 0,
         "color_scheme": "",
         "padding_top": 0,
@@ -415,6 +415,7 @@
         "product_j3NqRk",
         "collection_bic6LL"
       ],
+      "disabled": true,
       "name": "t:sections.collage.presets.name",
       "settings": {
         "heading": "",
@@ -498,7 +499,7 @@
         "bg_color": "#ffffff",
         "desktop_slides": 5,
         "tablet_slides": 3,
-        "mobile_slides": 1.2,
+        "mobile_slides": 2,
         "enable_marquee": true,
         "show_arrows": false,
         "enable_autoplay": true,
@@ -506,7 +507,7 @@
         "autoplay_speed": 5,
         "pause_on_hover": true,
         "enable_loop": true,
-        "padding_top": 0,
+        "padding_top": 20,
         "padding_bottom": 0
       }
     },
@@ -618,15 +619,15 @@
         "heading_size": "h1",
         "description": "<p>Read what our customers have to say about their experience with us.</p>",
         "section_bg_color": "#ffffff",
-        "show_arrows": true,
+        "show_arrows": false,
         "show_pagination": false,
         "enable_loop": true,
         "enable_autoplay": true,
         "autoplay_delay": 5,
         "slides_desktop": 4,
         "slides_tablet": 2,
-        "slides_mobile": 1.1,
-        "padding_top": 0,
+        "slides_mobile": 1,
+        "padding_top": 12,
         "padding_bottom": 0
       }
     },
@@ -682,7 +683,7 @@
         "heading_size": "h2",
         "columns_desktop": 4,
         "enable_slider_desktop": true,
-        "show_arrows": true,
+        "show_arrows": false,
         "show_dots": false,
         "enable_loop": true,
         "slides_mobile": 1,
