@@ -274,14 +274,74 @@
         "slider_slides_mobile": "3"
       }
     },
+    "collection_tabs_xbgAYE": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_GbrX7D": {
+          "type": "collection",
+          "settings": {
+            "tab_name": "Kurti",
+            "collection": "kurti"
+          }
+        },
+        "collection_Dd9i98": {
+          "type": "collection",
+          "settings": {
+            "tab_name": "Lehenga",
+            "collection": "lehenga"
+          }
+        },
+        "collection_xACMFL": {
+          "type": "collection",
+          "settings": {
+            "tab_name": "Gowns",
+            "collection": "gowns"
+          }
+        },
+        "collection_7EdCxf": {
+          "type": "collection",
+          "settings": {
+            "tab_name": "Bridal",
+            "collection": "bridal-lehengas"
+          }
+        }
+      },
+      "block_order": [
+        "collection_GbrX7D",
+        "collection_Dd9i98",
+        "collection_xACMFL",
+        "collection_7EdCxf"
+      ],
+      "name": "Collection Tabs",
+      "settings": {
+        "heading": "Best Selling",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "color_scheme": "",
+        "bg_color": "transparent",
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "enable_quick_add": false,
+        "products_to_show": 12,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 1.5,
+        "show_arrows": true,
+        "show_pagination": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "featured_collection_slider_8dx9RL": {
       "type": "featured-collection-slider",
       "name": "Featured Collection Slider",
       "settings": {
         "collection": "saree",
         "products_to_show": 8,
-        "title": "",
-        "heading_size": "h1",
+        "title": "Curated for You!",
+        "heading_size": "h2",
         "heading_alignment": "left",
         "show_video": true,
         "show_pagination": true,
@@ -635,6 +695,7 @@
     "slideshow_JjNx8d",
     "marquee_slider_RJ7HxM",
     "custom_collection_list_ttr73H",
+    "collection_tabs_xbgAYE",
     "featured_collection_slider_8dx9RL",
     "image_plus_video_WX4dca",
     "collage_AM7HwV",
