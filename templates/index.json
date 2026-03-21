@@ -31,6 +31,25 @@
             "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
           }
         },
+        "slide_h8KUfR": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_04_59_PM.png",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_04_55_PM.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        },
         "slide_yhkQfp": {
           "type": "slide",
           "settings": {
@@ -53,33 +72,56 @@
         "slide_ftKjxL": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_01_45_PM.png",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_00_44_PM.png",
             "image_overlay_opacity": 0,
-            "heading": "Image slide",
+            "heading": "",
             "heading_size": "h1",
-            "subheading": "Tell your brand's story through images",
-            "button_label": "Button label",
+            "subheading": "",
+            "button_label": "",
             "link": "",
             "button_style_secondary": false,
             "show_text_box": true,
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
+          }
+        },
+        "slide_P9z44e": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_22_48_PM.png",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_Mar_21_2026_08_22_42_PM.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-45c16cae-64de-4d65-9138-5c64829e1d64"
           }
         }
       },
       "block_order": [
         "slide_eYBHH9",
+        "slide_h8KUfR",
         "slide_yhkQfp",
-        "slide_ftKjxL"
+        "slide_ftKjxL",
+        "slide_P9z44e"
       ],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "medium",
-        "slider_visual": "counter",
+        "slide_height": "large",
+        "slider_visual": "dots",
         "auto_rotate": false,
-        "show_arrows": true,
+        "show_arrows": false,
         "change_slides_speed": 5,
         "image_behavior": "none",
         "show_text_below": true,
@@ -120,7 +162,7 @@
       "settings": {
         "bg_color": "#000000",
         "text_color": "#ffffff",
-        "speed": 20,
+        "speed": 22,
         "direction": "left",
         "pause_on_hover": true,
         "gap": 40,
@@ -229,7 +271,7 @@
         "slider_slides_desktop": 6,
         "slider_slides_tablet": 4,
         "slider_gap": 15,
-        "slider_slides_mobile": "2.5"
+        "slider_slides_mobile": "3"
       }
     },
     "featured_collection_slider_8dx9RL": {
@@ -238,7 +280,7 @@
       "settings": {
         "collection": "saree",
         "products_to_show": 8,
-        "title": "Featured Products",
+        "title": "",
         "heading_size": "h1",
         "heading_alignment": "center",
         "show_video": true,
@@ -578,7 +620,7 @@
         "content_alignment": "left",
         "icon_size": 50,
         "heading_size": "h2",
-        "columns_desktop": 3,
+        "columns_desktop": 4,
         "enable_slider_desktop": true,
         "show_arrows": true,
         "show_dots": false,
