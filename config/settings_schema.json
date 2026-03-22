@@ -1436,6 +1436,36 @@
       },
       {
         "type": "header",
+        "content": "Free Shipping Progress Bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_progress_bar",
+        "label": "Show free shipping progress bar",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold",
+        "default": 150,
+        "info": "The amount at which free shipping is offered."
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_progress_message",
+        "label": "Free shipping progress message",
+        "default": "Spend [amount] more to enjoy Free shipping!",
+        "info": "Use [amount] to show the remaining amount."
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_success_message",
+        "label": "Free shipping success message",
+        "default": "Congratulations! You've got free shipping!"
+      },
+      {
+        "type": "header",
         "content": "t:settings_schema.cart.settings.cart_drawer.header"
       },
       {
