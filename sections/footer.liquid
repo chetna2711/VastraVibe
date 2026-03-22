@@ -80,14 +80,18 @@
                 {% endif %}
               >
                 {%- if block.settings.heading != blank -%}
-                  <button class="footer-block__heading-wrapper" aria-expanded="false">
+                  {%- if block.type == 'link_list' -%}
+                    <button class="footer-block__heading-wrapper" type="button" aria-expanded="false">
+                      <h2 class="footer-block__heading inline-richtext">{{- block.settings.heading -}}</h2>
+                      <span class="footer-block__toggle-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  {%- else -%}
                     <h2 class="footer-block__heading inline-richtext">{{- block.settings.heading -}}</h2>
-                    <span class="footer-block__toggle-icon">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                    </span>
-                  </button>
+                  {%- endif -%}
                 {%- endif -%}
 
                 {%- case block.type -%}
@@ -435,29 +439,54 @@
 </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.innerWidth >= 750) return;
+  (function() {
+    function initFooterAccordion() {
+      const footer = document.querySelector('.footer');
+      if (!footer) return;
 
-    const footerBlockHeadings = document.querySelectorAll('.footer-block__heading-wrapper');
-    
-    footerBlockHeadings.forEach(heading => {
-      heading.addEventListener('click', function() {
-        const block = this.closest('.footer-block');
-        const content = block.querySelector('.footer-block__details-content, .footer-block__brand-info');
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      footer.addEventListener('click', function(e) {
+        if (window.innerWidth >= 750) return;
+
+        const heading = e.target.closest('.footer-block__heading-wrapper');
+        if (!heading) return;
+
+        console.log('Footer accordion clicked:', heading);
+
+        const block = heading.closest('.footer-block');
+        if (!block) return;
+
+        const content = block.querySelector('.footer-block__details-content');
+        if (!content) {
+          console.warn('Content container not found for block:', block);
+          return;
+        }
+
+        const isExpanded = heading.getAttribute('aria-expanded') === 'true';
         
-        // Toggle current block
-        this.setAttribute('aria-expanded', !isExpanded);
+        heading.setAttribute('aria-expanded', !isExpanded);
         block.classList.toggle('is-open');
         
         if (!isExpanded) {
           content.style.maxHeight = content.scrollHeight + 'px';
+          content.style.opacity = '1';
         } else {
-          content.style.maxHeight = null;
+          content.style.maxHeight = '0px';
+          content.style.opacity = '0';
         }
       });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFooterAccordion);
+    } else {
+      initFooterAccordion();
+    }
+
+    // Support for Shopify Design Mode (Theme Editor)
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target.classList.contains('section-footer')) initFooterAccordion();
     });
-  });
+  })();
 </script>
 
 {% schema %}
