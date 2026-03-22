@@ -80,7 +80,14 @@
                 {% endif %}
               >
                 {%- if block.settings.heading != blank -%}
-                  <h2 class="footer-block__heading inline-richtext">{{- block.settings.heading -}}</h2>
+                  <button class="footer-block__heading-wrapper" aria-expanded="false">
+                    <h2 class="footer-block__heading inline-richtext">{{- block.settings.heading -}}</h2>
+                    <span class="footer-block__toggle-icon">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </button>
                 {%- endif -%}
 
                 {%- case block.type -%}
@@ -426,6 +433,32 @@
     </div>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth >= 750) return;
+
+    const footerBlockHeadings = document.querySelectorAll('.footer-block__heading-wrapper');
+    
+    footerBlockHeadings.forEach(heading => {
+      heading.addEventListener('click', function() {
+        const block = this.closest('.footer-block');
+        const content = block.querySelector('.footer-block__details-content, .footer-block__brand-info');
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        
+        // Toggle current block
+        this.setAttribute('aria-expanded', !isExpanded);
+        block.classList.toggle('is-open');
+        
+        if (!isExpanded) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = null;
+        }
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
