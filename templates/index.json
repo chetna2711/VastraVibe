@@ -436,7 +436,7 @@
         "products_to_show": 4,
         "title": "In High Demand",
         "heading_size": "h2",
-        "heading_alignment": "left",
+        "heading_alignment": "center",
         "description": "",
         "show_description": true,
         "description_style": "body",
