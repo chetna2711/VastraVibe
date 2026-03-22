@@ -19,7 +19,7 @@
 <style>
   header-drawer {
     justify-self: start;
-    margin-left: -1.2rem;
+    margin-left: -1.2rem; } .header__icon .svg-wrapper { width: 34px!important; height: 34px!important; } .header__heading-link { padding: 2px 0!important; 
   }
 
   {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
@@ -63,22 +63,22 @@
 
   .list-menu__item--link {
     text-decoration: none;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
+    padding-bottom: 0px;
+    padding-top: 0px;
     line-height: calc(1 + 0.8 / var(--font-body-scale));
   }
 
   @media screen and (min-width: 750px) {
     .list-menu__item--link {
-      padding-bottom: 0.5rem;
-      padding-top: 0.5rem;
+      padding-bottom: 0px;
+      padding-top: 0px;
     }
   }
 </style>
 
 {%- style -%}
   .header {
-    padding: {{ section.settings.padding_top | times: 0.3 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.3 | round: 0 }}px 3rem;
+    padding: {{ section.settings.padding_top | times: 0.05 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.05 | round: 0 }}px 3rem;
   }
 
   .section-header {
@@ -130,13 +130,13 @@
 
   @media screen and (min-width: 990px) {
     .header {
-      padding-top: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.1 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.1 | round: 0 }}px;
     }
     
     .header--style-minimal {
-      padding-top: {{ section.settings.padding_top | times: 0.3 | round: 0 }}px;
-      padding-bottom: {{ section.settings.padding_bottom | times: 0.3 | round: 0 }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.05 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.05 | round: 0 }}px;
     }
   }
 {%- endstyle -%}
@@ -791,4 +791,6 @@
     setTimeout(initMenuHover, 100);
   })();
 </script>
+
+
 
