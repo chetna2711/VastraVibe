@@ -16,6 +16,10 @@
     "heading_scale": 100,
     "type_body_font": "cabin_n5",
     "body_scale": 100,
+    "use_custom_type_header_font": true,
+    "custom_type_header_font_url": "https://cdn.shopify.com/s/files/1/0978/0989/1648/files/Brand.woff?v=1774171064",
+    "use_custom_type_body_font": false,
+    "custom_type_body_font_url": "https://cdn.shopify.com/s/files/1/0978/0989/1648/files/Brand.woff?v=1774171064",
     "page_width": 1600,
     "spacing_sections": 24,
     "spacing_grid_horizontal": 8,
@@ -140,6 +144,10 @@
         "settings": {
           "color_scheme": "scheme-1"
         }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
       }
     },
     "content_for_index": [],
