@@ -71,7 +71,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "header_style": "classic",
+        "header_style": "minimal",
         "enable_transparent_header": false,
         "transparent_text_color": "#ffffff",
         "logo_position": "middle-left",
