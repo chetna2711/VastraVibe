@@ -114,7 +114,9 @@ class CartDrawer extends HTMLElement {
   }
 }
 
-customElements.define('cart-drawer', CartDrawer);
+if (!customElements.get('cart-drawer')) {
+  customElements.define('cart-drawer', CartDrawer);
+}
 
 class CartDrawerItems extends CartItems {
   getSectionsToRender() {
@@ -133,4 +135,6 @@ class CartDrawerItems extends CartItems {
   }
 }
 
-customElements.define('cart-drawer-items', CartDrawerItems);
+if (!customElements.get('cart-drawer-items')) {
+  customElements.define('cart-drawer-items', CartDrawerItems);
+}

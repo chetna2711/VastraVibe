@@ -159,11 +159,15 @@
                           id="CartDrawer-Remove-{{ item.index | plus: 1 }}"
                           data-index="{{ item.index | plus: 1 }}"
                         >
-                          <button type="button" class="cart-remove-button" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}">
+                          <a
+                            href="{{ item.url_to_remove }}"
+                            class="cart-remove-button"
+                            aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
+                          >
                             <span class="svg-wrapper">
                               {{- 'icon-remove.svg' | inline_asset_content -}}
                             </span>
-                          </button>
+                          </a>
                         </cart-remove-button>
                       </div>
                     </div>
@@ -171,6 +175,11 @@
                 {%- endfor -%}
               </div>
             {%- endif -%}
+            <p class="visually-hidden" id="CartDrawer-LiveRegionText" aria-live="polite" role="status"></p>
+            <p class="visually-hidden" id="CartDrawer-LineItemStatus" aria-live="polite" aria-hidden="true" role="status">
+              {{ 'accessibility.loading' | t }}
+            </p>
+            <div id="CartDrawer-CartErrors" role="alert"></div>
           </div>
         </form>
       </cart-drawer-items>
