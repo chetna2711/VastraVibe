@@ -140,6 +140,17 @@
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  /* ── Zoom Effect ── */
+  .wl-img-wrap {
+    overflow: hidden;
+  }
+  .wl-img-wrap img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+  .wishlist-card-wrap:hover .wl-img-wrap img {
+    transform: scale(1.1);
+  }
 {%- endstyle -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
@@ -187,12 +198,9 @@
 
     var ratioPct = imageRatio === 'portrait' ? '125%' : '100%';
 
-    /* Get best available images with fallbacks */
+    /* Get primary image */
     var rawImg1 = p.featured_image || (p.images && p.images[0]) || '';
-    var rawImg2 = (showSecondImage && p.images && p.images.length > 1) ? p.images[1] : '';
-
     var img1 = rawImg1 ? rawImg1.replace(/(\.(jpg|jpeg|png|gif|webp))/g, '_600x$1') : '';
-    var img2 = rawImg2 ? rawImg2.replace(/(\.(jpg|jpeg|png|gif|webp))/g, '_600x$1') : '';
 
     var price    = p.price;
     var cmpPrice = p.compare_at_price && p.compare_at_price > price ? p.compare_at_price : null;
@@ -213,9 +221,6 @@
     var img1Html = img1
       ? '<img src="' + img1 + '" alt="' + title.replace(/"/g,'&quot;') + '" class="motion-reduce" loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">'
       : '';
-    var img2Html = img2
-      ? '<img src="' + img2 + '" alt="" loading="lazy" class="wl-img2" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.4s ease;">'
-      : '';
 
     var removeBtn =
       '<button class="wishlist-remove-btn" data-remove="' + p.handle + '" aria-label="Remove from wishlist">' +
@@ -228,8 +233,8 @@
         '<div class="card card--{{ settings.card_style }} card--media">' +
           '<div class="card__inner {% if settings.card_style == "standard" %}color-{{ settings.card_color_scheme }} gradient{% endif %} ratio" style="--ratio-percent:' + ratioPct + ';">' +
             '<div class="card__media">' +
-              '<div class="media media--transparent media--hover-effect wl-img-wrap">' +
-                img1Html + img2Html +
+              '<div class="media media--transparent wl-img-wrap">' +
+                img1Html +
               '</div>' +
             '</div>' +
             '<div class="card__content"><div class="card__badge {{ settings.badge_position }}">' + badgeHtml + '</div></div>' +
@@ -292,14 +297,6 @@
 
       grid.innerHTML = valid.map(buildCard).join('');
       updateCountText(valid.length);
-
-      /* Image hover */
-      grid.querySelectorAll('.wl-img-wrap').forEach(function (wrap) {
-        var img2 = wrap.querySelector('.wl-img2');
-        if (!img2) return;
-        wrap.addEventListener('mouseenter', function () { img2.style.opacity = '1'; });
-        wrap.addEventListener('mouseleave', function () { img2.style.opacity = '0'; });
-      });
 
       /* Remove buttons */
       grid.querySelectorAll('[data-remove]').forEach(function (btn) {

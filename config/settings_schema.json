@@ -143,6 +143,38 @@
         "unit": "%",
         "label": "t:settings_schema.typography.settings.body_scale.label",
         "default": 100
+      },
+      {
+        "type": "header",
+        "content": "Custom Heading Font"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_custom_type_header_font",
+        "label": "Use Custom Heading Font",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "custom_type_header_font_url",
+        "label": "Custom Heading Font URL (.woff2)",
+        "info": "Upload your .woff2 file to Content > Files and paste the URL here."
+      },
+      {
+        "type": "header",
+        "content": "Custom Body Font"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_custom_type_body_font",
+        "label": "Use Custom Body Font",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "custom_type_body_font_url",
+        "label": "Custom Body Font URL (.woff2)",
+        "info": "Upload your .woff2 file to Content > Files and paste the URL here."
       }
     ]
   },

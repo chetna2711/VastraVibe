@@ -1,3 +1,14 @@
+// Fallback for CartPerformance if global.js fails or hasn't loaded
+if (typeof window.CartPerformance === 'undefined') {
+  console.log('CartPerformance fallback initialized');
+  window.CartPerformance = {
+    createStartingMarker: () => ({ name: 'start' }),
+    measureFromEvent: () => {},
+    measureFromMarker: () => {},
+    measure: (name, cb) => cb()
+  };
+}
+
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
@@ -150,7 +161,7 @@ class CartItems extends HTMLElement {
 
   updateQuantity(line, quantity, event, name, variantId) {
     const eventTarget = event.currentTarget instanceof CartRemoveButton ? 'clear' : 'change';
-    const cartPerformanceUpdateMarker = CartPerformance.createStartingMarker(`${eventTarget}:user-action`);
+    const cartPerformanceUpdateMarker = window.CartPerformance.createStartingMarker(`${eventTarget}:user-action`);
 
     this.enableLoading(line);
 
@@ -168,7 +179,7 @@ class CartItems extends HTMLElement {
       .then((state) => {
         const parsedState = JSON.parse(state);
 
-        CartPerformance.measure(`${eventTarget}:paint-updated-sections`, () => {
+        window.CartPerformance.measure(`${eventTarget}:paint-updated-sections`, () => {
           const quantityElement =
             document.getElementById(`Quantity-${line}`) || document.getElementById(`Drawer-quantity-${line}`);
           const items = document.querySelectorAll('.cart-item');
@@ -228,7 +239,7 @@ class CartItems extends HTMLElement {
       })
       .finally(() => {
         this.disableLoading(line);
-        CartPerformance.measureFromMarker(`${eventTarget}:user-action`, cartPerformanceUpdateMarker);
+        window.CartPerformance.measureFromMarker(`${eventTarget}:user-action`, cartPerformanceUpdateMarker);
       });
   }
 
@@ -292,10 +303,9 @@ if (!customElements.get('cart-note')) {
           'input',
           debounce((event) => {
             const body = JSON.stringify({ note: event.target.value });
-            fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } }).then(() =>
-              CartPerformance.measureFromEvent('note-update:user-action', event)
-            );
-          }, ON_CHANGE_DEBOUNCE_TIMER)
+            if (window.CartPerformance) window.CartPerformance.measureFromEvent('note-update:user-action', event);
+            fetch(`${routes.cart_update_url}`, { ...fetchConfig(), ...{ body } });
+          }, 300)
         );
       }
     }

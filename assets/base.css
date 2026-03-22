@@ -1986,11 +1986,13 @@ input[type='checkbox'] {
 .quantity__input::-webkit-outer-spin-button,
 .quantity__input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 .quantity__input[type='number'] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .quantity__rules {
@@ -2809,8 +2811,11 @@ details[open] > .header__submenu {
   transition: color var(--duration-short) ease;
 }
 
+.header__menu-item:hover,
 .header__menu-item:hover span {
   text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 details[open] > .header__menu-item {
@@ -2870,7 +2875,7 @@ details[open] > .header__menu-item .icon-caret {
 }
 
 .header__submenu .header__menu-item:hover {
-  text-decoration-line: underline;
+  text-decoration: none !important;
 }
 
 .header__menu-item .icon-caret {

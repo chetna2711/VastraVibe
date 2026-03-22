@@ -107,28 +107,6 @@
     }
   {% endif %}
 
-  /* Modern Menu Hover Effect */
-  .header__menu-item {
-    position: relative;
-    transition: color 0.3s ease;
-  }
-  
-  .header__menu-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0.5rem;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background-color: currentColor;
-    transition: width 0.3s ease, left 0.3s ease;
-  }
-
-  .header__menu-item:hover::after {
-    width: calc(100% - 4rem);
-    left: 2rem;
-  }
-
   /* Styles for different header layouts */
   .header--style-minimal {
     padding-top: {{ section.settings.padding_top | times: 0.2 | round: 0 }}px;
